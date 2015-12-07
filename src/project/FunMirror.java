@@ -4,6 +4,7 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamMotionDetector;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
+import com.github.sarxos.webcam.util.jh.JHGrayFilter;
 import filters.BackgroundFilter;
 import filters.MotionDistortionFilter;
 
@@ -16,12 +17,16 @@ public class FunMirror {
 	private MotionDistortionFilter mdf = new MotionDistortionFilter();
 	private WebcamMotionDetector detector;
 	private BackgroundFilter bgf;
+	private filters.GrayFilter gray;
 
 	public FunMirror() {
 
 	}
 
 	public void run(){
+		gray = new filters.GrayFilter();
+
+
 		bgf = new BackgroundFilter();
 		bgf.setMaxArea(1);
 		bgf.setMinTime(5000);
@@ -29,7 +34,7 @@ public class FunMirror {
 
 		Webcam webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
-		webcam.setImageTransformer(mdf);
+		//webcam.setImageTransformer(gray);
 		webcam.setImageTransformer(bgf);
 		webcam.open();
 

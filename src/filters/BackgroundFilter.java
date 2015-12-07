@@ -18,6 +18,7 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 	private double maxArea;
 	private long lastMotionTime = System.currentTimeMillis();
 	private boolean active = true;
+	private filters.GrayFilter gray = new GrayFilter();
 
 	public BufferedImage getBackgroundImage() {
 		return backgroundImage;
@@ -111,7 +112,7 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 						+ Math.abs(((foreground & 0xff000000) >> 24) - ((background & 0xff000000) >> 24));
 				if(difference < 75){
 					//Seems to affect the motion sensing
-					retVal.setRGB(i,j,0xffffff);
+					retVal.setRGB(i,j,0xff0000);
 				}
 				else {
 					retVal.setRGB(i, j, foreground);
