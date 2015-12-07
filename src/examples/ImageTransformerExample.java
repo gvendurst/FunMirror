@@ -24,7 +24,7 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 	private static final CircleFilter CIRCLE_FILTER = new CircleFilter();
 	private static final DissolveFilter DISSOLVE_FILTER = new DissolveFilter();
 	private static final NoiseFilter NOISE_FILTER = new NoiseFilter();
-	private static final RippleFilter RIPPLE_FILTER = new RippleFilter(5.0f);
+	private static final RippleFilter RIPPLE_FILTER = new RippleFilter();
 
 	public ImageTransformerExample() {
 

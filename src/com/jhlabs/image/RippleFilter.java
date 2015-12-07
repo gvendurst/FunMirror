@@ -60,10 +60,10 @@ public class RippleFilter extends TransformFilter {
 		xWavelength = yWavelength = 16.0f;
 	}
 
-	public RippleFilter(float xAmp) {
-		xAmplitude = xAmp;
-		yAmplitude = 0.0f;
-		xWavelength = yWavelength = 16.0f;
+	public RippleFilter(float xAmplitude, float yAmplitude, float xyWavelength) {
+		this.xAmplitude = xAmplitude;
+		this.yAmplitude = yAmplitude;
+		this.xWavelength = this.yWavelength = xyWavelength;
 	}
 
 	/**

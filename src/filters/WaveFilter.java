@@ -2,10 +2,10 @@ package filters;
 
 import com.github.sarxos.webcam.WebcamEvent;
 import com.github.sarxos.webcam.WebcamImageTransformer;
+import com.github.sarxos.webcam.WebcamListener;
 
 import java.awt.image.BufferedImage;
 
-import com.github.sarxos.webcam.WebcamListener;
 import com.jhlabs.image.RippleFilter;
 
 /**
@@ -13,7 +13,8 @@ import com.jhlabs.image.RippleFilter;
  */
 public class WaveFilter implements WebcamImageTransformer, WebcamListener {
 
-    private static final RippleFilter RIPPLE_FILTER = new RippleFilter(5.0f);
+    // Gerði annan Constructor fyrir RippleFilter til að prufa effectana. (5.0f, 0, 16.0f) er default.
+    private static final RippleFilter RIPPLE_FILTER = new RippleFilter(5.0f, 0, 16.0f);
 
     public WaveFilter() {
 
