@@ -10,16 +10,27 @@ import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 import com.github.sarxos.webcam.util.jh.JHGrayFilter;
 
+import com.jhlabs.image.GrayFilter;
+import com.jhlabs.image.CircleFilter;
+import com.jhlabs.image.DissolveFilter;
+import com.jhlabs.image.NoiseFilter;
+import com.jhlabs.image.RippleFilter;
+
 
 public class ImageTransformerExample implements WebcamImageTransformer {
 
 	private static final JHGrayFilter GRAY = new JHGrayFilter();
+	private static final GrayFilter GRAY_NEW = new GrayFilter();
+	private static final CircleFilter CIRCLE_FILTER = new CircleFilter();
+	private static final DissolveFilter DISSOLVE_FILTER = new DissolveFilter();
+	private static final NoiseFilter NOISE_FILTER = new NoiseFilter();
+	private static final RippleFilter RIPPLE_FILTER = new RippleFilter(5.0f);
 
 	public ImageTransformerExample() {
 
 		Webcam webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
-		webcam.setImageTransformer(new filters.TestFilter());
+		webcam.setImageTransformer(this);
 		webcam.open();
 
 		JFrame window = new JFrame("Test Transformer");
@@ -36,7 +47,7 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 
 	@Override
 	public BufferedImage transform(BufferedImage image) {
-		return GRAY.filter(image, null);
+		return RIPPLE_FILTER.filter(image, null);
 	}
 
 	public static void main(String[] args) {

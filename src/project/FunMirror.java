@@ -17,6 +17,7 @@ public class FunMirror {
 	private MotionDistortionFilter mdf = new MotionDistortionFilter();
 	private WebcamMotionDetector detector;
 	private BackgroundFilter bgf;
+	private filters.WaveFilter wf;
 	private filters.GrayFilter gray;
 
 	public FunMirror() {
@@ -25,7 +26,7 @@ public class FunMirror {
 
 	public void run(){
 		gray = new filters.GrayFilter();
-
+		wf = new filters.WaveFilter();
 
 		bgf = new BackgroundFilter();
 		bgf.setMaxArea(1);
@@ -35,11 +36,13 @@ public class FunMirror {
 		Webcam webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
 		//webcam.setImageTransformer(gray);
+		//webcam.setImageTransformer(wf);
 		webcam.setImageTransformer(bgf);
 		webcam.open();
 
 
 		webcam.addWebcamListener(bgf);
+		//webcam.addWebcamListener(wf);
 
 
 		JFrame window = new JFrame("Test Transformer");

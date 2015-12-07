@@ -60,6 +60,12 @@ public class RippleFilter extends TransformFilter {
 		xWavelength = yWavelength = 16.0f;
 	}
 
+	public RippleFilter(float xAmp) {
+		xAmplitude = xAmp;
+		yAmplitude = 0.0f;
+		xWavelength = yWavelength = 16.0f;
+	}
+
 	/**
 	 * Set the amplitude of ripple in the X direction.
 	 * @param xAmplitude the amplitude (in pixels).
