@@ -3,8 +3,10 @@ package filters;
 import com.github.sarxos.webcam.*;
 import com.sun.glass.ui.Timer;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -12,8 +14,10 @@ import java.util.Date;
  *
  */
 public class BackgroundFilter implements WebcamMotionListener, WebcamListener, WebcamImageTransformer{
+
 	private BufferedImage backgroundImage;
 	private BufferedImage currentImage;
+	private BufferedImage customImage = getImage("hitler.png");
 	private double minTime; //In milliseconds
 	private double maxArea;
 	private long lastMotionTime = System.currentTimeMillis();
@@ -64,6 +68,7 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 		//And should the background image be a combination of a few frames?
 		if((System.currentTimeMillis() - lastMotionTime) >= minTime){
 			//We have found a background
+			//backgroundImage = customImage;
 			backgroundImage = currentImage;
 
 			System.out.println("New background image found");
@@ -110,7 +115,7 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 						+ Math.abs(((foreground & 0xff00) >> 8) - ((background & 0xff00) >> 8))
 						+ Math.abs(((foreground & 0xff0000) >> 16) - ((background & 0xff0000) >> 16))
 						+ Math.abs(((foreground & 0xff000000) >> 24) - ((background & 0xff000000) >> 24));
-				if(difference < 75){
+				if(difference < 50){
 					//Seems to affect the motion sensing
 					retVal.setRGB(i,j,0xff0000);
 				}
@@ -127,5 +132,13 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 		if ( dstCM == null )
 			dstCM = src.getColorModel();
 		return new BufferedImage(dstCM, dstCM.createCompatibleWritableRaster(src.getWidth(), src.getHeight()), dstCM.isAlphaPremultiplied(), null);
+	}
+
+	private BufferedImage getImage(String image) {
+		try {
+			return ImageIO.read(BackgroundFilter.class.getResourceAsStream("/" + image));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
