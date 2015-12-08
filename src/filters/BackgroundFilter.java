@@ -66,7 +66,7 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 		if((System.currentTimeMillis() - lastMotionTime) >= minTime){
 			//We have found a background
 			//backgroundImage = customImage;
-			backgroundImage = currentImage;
+			backgroundImage = customImage;
 
 			System.out.println("New background image found");
 		}
@@ -100,6 +100,7 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 
 	@Override
 	public BufferedImage transform(BufferedImage bufferedImage) {
+
 		if(!active || backgroundImage == null){
 			return bufferedImage;
 		}
