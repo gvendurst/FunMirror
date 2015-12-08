@@ -16,6 +16,8 @@ limitations under the License.
 
 package com.jhlabs.image;
 
+import filters.PinchFilter2;
+
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.*;
@@ -38,6 +40,7 @@ public class PinchFilter extends TransformFilter {
 	private float height;
 	
 	public PinchFilter() {
+
 	}
 
 	/**

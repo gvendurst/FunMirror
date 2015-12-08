@@ -3,6 +3,7 @@ package project;
 import com.github.sarxos.webcam.*;
 import filters.BackgroundFilter;
 import filters.MotionDistortionFilter;
+import filters.PinchFilter2;
 
 import javax.swing.*;
 
@@ -16,6 +17,7 @@ public class FunMirror implements GameModeSwitch{
 	private filters.WaveFilter wf;
 	private filters.GrayFilter gray;
 	private filters.FrameFilter ff;
+	private PinchFilter2 pf;
 	private GameModeSwitchDetector gms;
 	private int currentGameMode = 0;
 	private final int numberOfGameModes = 2;
@@ -28,6 +30,7 @@ public class FunMirror implements GameModeSwitch{
 	public void run(){
 		gray = new filters.GrayFilter();
 		wf = new filters.WaveFilter();
+		pf = new PinchFilter2();
 		//ff = new filters.FrameFilter();
 
 		bgf = new BackgroundFilter();
@@ -35,10 +38,10 @@ public class FunMirror implements GameModeSwitch{
 		bgf.setMinTime(5000);
 		webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
+		webcam.setImageTransformer(wf);
 		//webcam.setImageTransformer(gray);
-		//webcam.setImageTransformer(wf);
 		//webcam.setImageTransformer(ff);
-		webcam.setImageTransformer(bgf);
+		//webcam.setImageTransformer(bgf);
 		webcam.open();
 
 
@@ -77,7 +80,7 @@ public class FunMirror implements GameModeSwitch{
 	private void setupGameModeSwitch(){
 		gms = new GameModeSwitchDetector();
 		gms.setMinTime(5000);
-		//detector.addMotionListener(gms);
+		detector.addMotionListener(gms);
 		gms.addGameModeSwitch(this);
 	}
 
@@ -92,7 +95,7 @@ public class FunMirror implements GameModeSwitch{
 				webcam.setImageTransformer(wf);
 				break;
 			case 1:
-				webcam.setImageTransformer(bgf);
+				webcam.setImageTransformer(pf);
 				break;
 		}
 

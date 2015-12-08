@@ -116,7 +116,7 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 						+ Math.abs(((foreground & 0xff0000) >> 16) - ((background & 0xff0000) >> 16))
 						+ Math.abs(((foreground & 0xff000000) >> 24) - ((background & 0xff000000) >> 24));
 				if(difference < 50){
-					//Seems to affect the motion sensing, or maybe not?
+					//Seems to affect the motion sensing?
 					retVal.setRGB(i,j,0xff0000);
 				}
 				else {
