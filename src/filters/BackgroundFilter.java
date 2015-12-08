@@ -17,7 +17,7 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 
 	private BufferedImage backgroundImage;
 	private BufferedImage currentImage;
-	private BufferedImage customImage = getImage("hitler.png");
+	private BufferedImage customImage = getImage("forest.jpg");
 	private double minTime; //In milliseconds
 	private double maxArea;
 	private long lastMotionTime = System.currentTimeMillis();
@@ -69,7 +69,7 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 		if((System.currentTimeMillis() - lastMotionTime) >= minTime){
 			//We have found a background
 			//backgroundImage = customImage;
-			backgroundImage = currentImage;
+			backgroundImage = customImage;
 
 			System.out.println("New background image found");
 		}
@@ -117,7 +117,7 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 						+ Math.abs(((foreground & 0xff000000) >> 24) - ((background & 0xff000000) >> 24));
 				if(difference < 50){
 					//Seems to affect the motion sensing
-					retVal.setRGB(i,j,0xff0000);
+					retVal.setRGB(i,j,background);
 				}
 				else {
 					retVal.setRGB(i, j, foreground);
