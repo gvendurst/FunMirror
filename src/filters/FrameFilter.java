@@ -1,65 +1,22 @@
 package filters;
 
-import java.awt.FlowLayout;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 import com.github.sarxos.webcam.WebcamImageTransformer;
-import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamResolution;
-import com.github.sarxos.webcam.WebcamPanel;
+
 
 /**
  * Created by HörðurMár on 8.12.2015.
  */
 public class FrameFilter implements WebcamImageTransformer {
 
-    private static final BufferedImage IMAGE_FRAME = getImage("frame.png");
-
-    private Webcam webcam = Webcam.getDefault();
+    private static final BufferedImage funFrame = getImage("frame.png");
 
     public FrameFilter() {
 
-        webcam.setViewSize(WebcamResolution.VGA.getSize());
-        webcam.setImageTransformer(this);
-        webcam.open();
-
-        JFrame window = new JFrame("Test Transformer");
-
-        WebcamPanel panel = new WebcamPanel(webcam);
-        panel.setFPSDisplayed(true);
-        panel.setFillArea(true);
-/*
-        JButton button = new JButton(new AbstractAction("capture") {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                try {
-                    ImageIO.write(webcam.getImage(), "PNG", new File("capture.png"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-*/
-        window.setLayout(new FlowLayout(FlowLayout.CENTER));
-        window.add(panel);
-        //window.add(button);
-        window.pack();
-        window.setVisible(true);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     @Override
@@ -72,7 +29,7 @@ public class FrameFilter implements WebcamImageTransformer {
 
         Graphics2D g2 = modified.createGraphics();
         g2.drawImage(image, null, 0, 0);
-        g2.drawImage(IMAGE_FRAME, null, 0, 0);
+        g2.drawImage(funFrame, null, 0, 0);
         g2.dispose();
 
         modified.flush();
@@ -86,24 +43,6 @@ public class FrameFilter implements WebcamImageTransformer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-
-        JFrame.setDefaultLookAndFeelDecorated(true);
-
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                new FrameFilter();
-            }
-        });
     }
 }
 
