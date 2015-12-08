@@ -30,13 +30,13 @@ public class FunMirror implements GameModeSwitch{
 		bgf = new BackgroundFilter();
 		bgf.setMaxArea(1);
 		bgf.setMinTime(5000);
-		
+
 		Webcam webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
 		//webcam.setImageTransformer(gray);
 		//webcam.setImageTransformer(wf);
-		webcam.setImageTransformer(ff);
-		//webcam.setImageTransformer(bgf);
+		//webcam.setImageTransformer(ff);
+		webcam.setImageTransformer(bgf);
 		webcam.open();
 
 
