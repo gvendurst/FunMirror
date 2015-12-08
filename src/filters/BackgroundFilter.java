@@ -17,7 +17,7 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 
 	private BufferedImage backgroundImage;
 	private BufferedImage currentImage;
-	private BufferedImage customImage = getImage("hitler.png");
+	private BufferedImage customImage = getImage("forest.png");
 	private double minTime; //In milliseconds
 	private double maxArea;
 	private long lastMotionTime = System.currentTimeMillis();
