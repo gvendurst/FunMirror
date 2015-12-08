@@ -10,7 +10,7 @@ import javax.swing.*;
 /**
  * Created by Gvendurst on 4.12.2015.
  */
-public class FunMirror {
+public class FunMirror implements GameModeSwitch{
 	private MotionDistortionFilter mdf = new MotionDistortionFilter();
 	private WebcamMotionDetector detector;
 	private BackgroundFilter bgf;
@@ -66,5 +66,10 @@ public class FunMirror {
 	public static void main(String[] args) {
 		FunMirror fm = new FunMirror();
 		fm.run();
+	}
+
+	@Override
+	public void onGameModeSwitch(int args) {
+
 	}
 }
