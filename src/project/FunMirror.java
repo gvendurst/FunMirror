@@ -1,7 +1,6 @@
 package project;
 
 import com.github.sarxos.webcam.*;
-import com.github.sarxos.webcam.util.jh.JHGrayFilter;
 import filters.BackgroundFilter;
 import filters.MotionDistortionFilter;
 
@@ -17,6 +16,10 @@ public class FunMirror implements GameModeSwitch{
 	private filters.WaveFilter wf;
 	private filters.GrayFilter gray;
 	private filters.FrameFilter ff;
+	private GameModeSwitchDetector gms;
+	private int currentGameMode = 0;
+	private final int numberOfGameModes = 2;
+	private Webcam webcam;
 
 	public FunMirror() {
 
@@ -25,18 +28,18 @@ public class FunMirror implements GameModeSwitch{
 	public void run(){
 		gray = new filters.GrayFilter();
 		wf = new filters.WaveFilter();
-		ff = new filters.FrameFilter();
+		//ff = new filters.FrameFilter();
 
 		bgf = new BackgroundFilter();
 		bgf.setMaxArea(1);
 		bgf.setMinTime(5000);
 		
-		Webcam webcam = Webcam.getDefault();
+		webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
 		//webcam.setImageTransformer(gray);
 		//webcam.setImageTransformer(wf);
-		webcam.setImageTransformer(ff);
-		//webcam.setImageTransformer(bgf);
+		//webcam.setImageTransformer(ff);
+		webcam.setImageTransformer(bgf);
 		webcam.open();
 
 
@@ -57,7 +60,9 @@ public class FunMirror implements GameModeSwitch{
 
 		detector.addMotionListener(mdf);
 		detector.addMotionListener(bgf);
+		setupGameModeSwitch();
 		detector.start();
+
 
 		window.add(panel);
 		window.pack();
@@ -70,8 +75,28 @@ public class FunMirror implements GameModeSwitch{
 		fm.run();
 	}
 
+	private void setupGameModeSwitch(){
+		gms = new GameModeSwitchDetector();
+		gms.setMinTime(5000);
+		//detector.addMotionListener(gms);
+		gms.addGameModeSwitch(this);
+	}
+
 	@Override
 	public void onGameModeSwitch(int args) {
+		System.out.println("Game mode changed");
+		currentGameMode = (currentGameMode + 1) % numberOfGameModes;
 
+
+		switch (currentGameMode){
+			case 0:
+				webcam.setImageTransformer(wf);
+				break;
+			case 1:
+				webcam.setImageTransformer(bgf);
+				break;
+		}
+
+		System.out.println("Current gamemode: " + currentGameMode);
 	}
 }

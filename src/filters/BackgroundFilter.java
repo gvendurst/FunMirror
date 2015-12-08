@@ -1,13 +1,11 @@
 package filters;
 
 import com.github.sarxos.webcam.*;
-import com.sun.glass.ui.Timer;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.io.IOException;
-import java.util.Date;
 
 /**
  * Created by Gvendurst on 4.12.2015.
@@ -17,9 +15,9 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 
 	private BufferedImage backgroundImage;
 	private BufferedImage currentImage;
-	private BufferedImage customImage = getImage("forest.png");
+	private BufferedImage customImage = getImage("hitler.png");
 	private double minTime; //In milliseconds
-	private double maxArea;
+	private long maxArea;
 	private long lastMotionTime = System.currentTimeMillis();
 	private boolean active = true;
 	private filters.GrayFilter gray = new GrayFilter();
@@ -36,11 +34,11 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 		this.minTime = minTime;
 	}
 
-	public double getMaxArea() {
+	public long getMaxArea() {
 		return maxArea;
 	}
 
-	public void setMaxArea(double maxArea) {
+	public void setMaxArea(long maxArea) {
 		this.maxArea = maxArea;
 	}
 
@@ -55,7 +53,7 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 	public BackgroundFilter() {
 	}
 
-	public BackgroundFilter(double maxArea, double minTime) {
+	public BackgroundFilter(long maxArea, long minTime) {
 		this.maxArea = maxArea;
 		this.minTime = minTime;
 	}
@@ -74,6 +72,8 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 		}
 
 		if(webcamMotionEvent.getArea() > maxArea) {
+			//It is possible to find two new images in rapid succession.
+			//Could be a threading issue, or something else
 			lastMotionTime = System.currentTimeMillis();
 		}
 	}
@@ -115,7 +115,7 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 						+ Math.abs(((foreground & 0xff0000) >> 16) - ((background & 0xff0000) >> 16))
 						+ Math.abs(((foreground & 0xff000000) >> 24) - ((background & 0xff000000) >> 24));
 				if(difference < 50){
-					//Seems to affect the motion sensing
+					//Seems to affect the motion sensing, or maybe not?
 					retVal.setRGB(i,j,0xff0000);
 				}
 				else {
