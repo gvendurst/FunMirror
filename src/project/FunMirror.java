@@ -1,9 +1,6 @@
 package project;
 
-import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamMotionDetector;
-import com.github.sarxos.webcam.WebcamPanel;
-import com.github.sarxos.webcam.WebcamResolution;
+import com.github.sarxos.webcam.*;
 import com.github.sarxos.webcam.util.jh.JHGrayFilter;
 import filters.BackgroundFilter;
 import filters.MotionDistortionFilter;
@@ -55,6 +52,7 @@ public class FunMirror {
 		detector = new WebcamMotionDetector(webcam);
 		detector.setInterval(100); // one check per x ms
 		detector.setPixelThreshold(20);
+
 		detector.addMotionListener(mdf);
 		detector.addMotionListener(bgf);
 		detector.start();

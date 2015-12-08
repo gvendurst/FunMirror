@@ -62,7 +62,6 @@ public class BackgroundFilter implements WebcamMotionListener, WebcamListener, W
 
 	@Override
 	public void motionDetected(WebcamMotionEvent webcamMotionEvent) {
-		System.out.println(webcamMotionEvent.getArea());
 		//Will likely use the picture after the motion as a background
 		//Should this check be moved to webcamImageObtained?
 		//And should the background image be a combination of a few frames?
