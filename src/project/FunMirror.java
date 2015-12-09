@@ -1,18 +1,20 @@
 package project;
 
 import com.github.sarxos.webcam.*;
-import filters.BackgroundFilter;
-import filters.MotionDistortionFilter;
-import filters.MultiPinchFilter;
-import filters.PinchFilter2;
-import filters.WaterEffectFilter;
+import filters.*;
+import org.openimaj.image.processing.face.detection.DetectedFace;
+import org.openimaj.image.processing.face.detection.HaarCascadeDetector;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Gvendurst on 4.12.2015.
  */
-public class FunMirror implements GameModeSwitch{
+public class FunMirror implements GameModeSwitch {
 	private static FunMirror funMirror;
 	private MotionDistortionFilter mdf = new MotionDistortionFilter();
 	private WebcamMotionDetector detector;
@@ -27,12 +29,13 @@ public class FunMirror implements GameModeSwitch{
 	private int currentGameMode = 0;
 	private final int numberOfGameModes = 6;
 	private Webcam webcam;
+	private FacePainter facePainter;
 
 	public FunMirror() {
 
 	}
 
-	public void run(){
+	public void start(){
 		gray = new filters.GrayFilter();
 		wf = new filters.WaveFilter();
 		pf = new PinchFilter2();
@@ -49,16 +52,10 @@ public class FunMirror implements GameModeSwitch{
 		webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
 
-		//webcam.setImageTransformer(wf);
-		webcam.setImageTransformer(wf);
-		//webcam.setImageTransformer(wef);
-		//webcam.setImageTransformer(gray);
-		//webcam.setImageTransformer(ff);
-		//webcam.setImageTransformer(bgf);
+
 		webcam.open();
 
-		System.out.println("ViewSize: " + webcam.getViewSize());
-
+		//Sets the first gamemode
 		currentGameMode = numberOfGameModes - 1;
 		onGameModeSwitch(0);
 
@@ -86,6 +83,8 @@ public class FunMirror implements GameModeSwitch{
 		setupGameModeSwitch();
 		detector.start();
 
+
+		facePainter = new FacePainter(webcam, panel);
 
 		window.add(panel);
 		window.pack();
@@ -115,7 +114,7 @@ public class FunMirror implements GameModeSwitch{
 
 	public static void main(String[] args) {
 		funMirror = new FunMirror();
-		funMirror.run();
+		funMirror.start();
 	}
 
 	private void setupGameModeSwitch(){
@@ -127,27 +126,41 @@ public class FunMirror implements GameModeSwitch{
 
 	@Override
 	public void onGameModeSwitch(int args) {
+		//Dispose the current game mode
+		switch (currentGameMode){
+			case 1:
+				facePainter.stop();
+				break;
+			default:
+				webcam.setImageTransformer(null);
+				break;
+		}
+
+
 		System.out.println("Game mode changed");
 		currentGameMode = (currentGameMode + 1) % numberOfGameModes;
 
-
+		//Setup the next game mode
 		switch (currentGameMode){
 			case 0:
 				webcam.setImageTransformer(wf); // WaveFilter
 				break;
 			case 1:
-				webcam.setImageTransformer(pf); // PinchFilter
+				facePainter.start();
 				break;
 			case 2:
-				webcam.setImageTransformer(gray); // GrayFilter
+				webcam.setImageTransformer(pf); // PinchFilter
 				break;
 			case 3:
+				webcam.setImageTransformer(gray); // GrayFilter
+				break;
+			case 4:
 				webcam.setImageTransformer(wef); // WaterEffectFilter, líkist smá pinch filter eftir allar breytingarnar
 				break;							 // en við getum experimentað meira. 
-			case 4:
+			case 5:
 				webcam.setImageTransformer(ff); // FrameFilter
 				break;
-			case 5:
+			case 6:
 				webcam.setImageTransformer(mpf);
 				break;
 		}
