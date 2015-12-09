@@ -38,7 +38,7 @@ public class MultiPinchFilter implements WebcamImageTransformer, WebcamMotionLis
 
 		theList = new ArrayList<Point>();
 		theList.add(new Point(100,100));
-		theList.add(new Point(200,200));
+		theList.add(new Point(300,300));
 
 		for (PointDouble p : PointListToPointDoubleList(theList)) {
 			PINCH_FILTER.setCentreX((float)p.getX());

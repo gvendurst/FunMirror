@@ -5,6 +5,7 @@ import filters.BackgroundFilter;
 import filters.MotionDistortionFilter;
 import filters.MultiPinchFilter;
 import filters.PinchFilter2;
+import filters.WaterEffectFilter;
 
 import javax.swing.*;
 
@@ -16,6 +17,7 @@ public class FunMirror implements GameModeSwitch{
 	private MotionDistortionFilter mdf = new MotionDistortionFilter();
 	private WebcamMotionDetector detector;
 	private BackgroundFilter bgf;
+	private filters.WaterEffectFilter wef;
 	private filters.WaveFilter wf;
 	private filters.GrayFilter gray;
 	private filters.FrameFilter ff;
@@ -23,7 +25,7 @@ public class FunMirror implements GameModeSwitch{
 	private MultiPinchFilter mpf;
 	private GameModeSwitchDetector gms;
 	private int currentGameMode = 0;
-	private final int numberOfGameModes = 3;
+	private final int numberOfGameModes = 6;
 	private Webcam webcam;
 
 	public FunMirror() {
@@ -37,12 +39,19 @@ public class FunMirror implements GameModeSwitch{
 		mpf = new MultiPinchFilter();
 		//ff = new filters.FrameFilter();
 
+		wef = new WaterEffectFilter();
+		ff = new filters.FrameFilter();
+
+
 		bgf = new BackgroundFilter();
 		bgf.setMaxArea(1);
 		bgf.setMinTime(5000);
 		webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
+
 		//webcam.setImageTransformer(wf);
+		webcam.setImageTransformer(wf);
+		//webcam.setImageTransformer(wef);
 		//webcam.setImageTransformer(gray);
 		//webcam.setImageTransformer(ff);
 		//webcam.setImageTransformer(bgf);
@@ -124,13 +133,22 @@ public class FunMirror implements GameModeSwitch{
 
 		switch (currentGameMode){
 			case 0:
-				webcam.setImageTransformer(mpf);
+				webcam.setImageTransformer(wf); // WaveFilter
 				break;
 			case 1:
-				webcam.setImageTransformer(pf);
+				webcam.setImageTransformer(pf); // PinchFilter
 				break;
 			case 2:
-				webcam.setImageTransformer(wf);
+				webcam.setImageTransformer(gray); // GrayFilter
+				break;
+			case 3:
+				webcam.setImageTransformer(wef); // WaterEffectFilter, líkist smá pinch filter eftir allar breytingarnar
+				break;							 // en við getum experimentað meira. 
+			case 4:
+				webcam.setImageTransformer(ff); // FrameFilter
+				break;
+			case 5:
+				webcam.setImageTransformer(mpf);
 				break;
 		}
 
