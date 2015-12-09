@@ -34,7 +34,7 @@ public class GameModeSwitchDetector implements WebcamMotionListener{
 	public void motionDetected(WebcamMotionEvent webcamMotionEvent) {
 		System.out.println("Area: " + webcamMotionEvent.getArea());
 		if((System.currentTimeMillis() - lastMotion) >= minTime){
-			if(webcamMotionEvent.getArea() >= 75){
+			if(webcamMotionEvent.getArea() >= 50){
 				onGameModeSwitch();
 				lastMotion = System.currentTimeMillis();
 			}
