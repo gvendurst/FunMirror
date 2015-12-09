@@ -11,11 +11,14 @@ import java.util.ArrayList;
 public class GameModeSwitchDetector implements WebcamMotionListener{
 	private double minTime;
 	private double lastMotion;
+	private double minArea;
+	private final static double MIN_AREA_DEFAULT = 50;
 
 	private ArrayList<GameModeSwitch> listeners;
 
 	public GameModeSwitchDetector(){
 		listeners = new ArrayList<>();
+		minArea = MIN_AREA_DEFAULT;
 	}
 
 	public void addGameModeSwitch(GameModeSwitch gms){
@@ -30,11 +33,23 @@ public class GameModeSwitchDetector implements WebcamMotionListener{
 		this.minTime = minTime;
 	}
 
+	public double getMinArea() {
+		return minArea;
+	}
+
+	public void setMinArea(double minArea) {
+		this.minArea = minArea;
+	}
+
+	public void setMinAreaDefault(){
+		minArea = MIN_AREA_DEFAULT;
+	}
+
 	@Override
 	public void motionDetected(WebcamMotionEvent webcamMotionEvent) {
 		System.out.println("Area: " + webcamMotionEvent.getArea());
 		if((System.currentTimeMillis() - lastMotion) >= minTime){
-			if(webcamMotionEvent.getArea() >= 75){
+			if(webcamMotionEvent.getArea() >= minArea){
 				onGameModeSwitch();
 				lastMotion = System.currentTimeMillis();
 			}

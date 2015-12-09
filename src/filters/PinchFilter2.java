@@ -14,8 +14,8 @@ public class PinchFilter2 implements WebcamImageTransformer, WebcamListener {
 	private static final com.jhlabs.image.PinchFilter PINCH_FILTER = new com.jhlabs.image.PinchFilter();
 
 	public PinchFilter2() {
-		PINCH_FILTER.setAmount(0.5f);
-		PINCH_FILTER.setRadius(200);
+		PINCH_FILTER.setAmount(-0.5f);
+		PINCH_FILTER.setRadius(300);
 	}
 
 	@Override
