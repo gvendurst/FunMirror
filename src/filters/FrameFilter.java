@@ -26,20 +26,16 @@ public class FrameFilter implements WebcamImageTransformer {
         int w = image.getWidth();
         int h = image.getHeight();
 
-        BufferedImage retVal = createCompatibleDestImage(image, null);//added
-        //BufferedImage modified = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-
-        //Graphics2D g2 = modified.createGraphics();
-        Graphics2D g2 = retVal.createGraphics();//added
+        BufferedImage bgImage = createCompatibleDestImage(image, null);
+        
+        Graphics2D g2 = bgImage.createGraphics();
         g2.drawImage(image, null, 0, 0);
         g2.drawImage(funFrame, null, 0, 0);
         g2.dispose();
 
-        //modified.flush();
-        retVal.flush();//added
-
-        //return modified;
-        return retVal;//added
+        bgImage.flush();
+    
+        return bgImage;
     }
 
     private static final BufferedImage getImage(String image) {
