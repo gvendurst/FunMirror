@@ -41,6 +41,14 @@ public class WaterFilter extends TransformFilter {
 		setEdgeAction( CLAMP );
 	}
 
+	public WaterFilter(float amplitude, float phase, float radius, float wavelength) {
+
+		this.amplitude = amplitude;
+		this.phase = phase;
+		this.radius = radius;
+		this.wavelength = wavelength;
+	}
+
 	/**
 	 * Set the wavelength of the ripples.
 	 * @param wavelength the wavelength
