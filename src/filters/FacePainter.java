@@ -31,7 +31,7 @@ public class FacePainter implements Runnable, WebcamPanel.Painter {
 	private ImageIcon trollIcon= null;
 	private Webcam webcam;
 	private WebcamPanel panel;
-	private final String fileName = "/flyingbluepig.gif";
+	private final String fileName = "/jesuskristur.png";
 	private boolean isGif = false;
 
 
@@ -43,6 +43,7 @@ public class FacePainter implements Runnable, WebcamPanel.Painter {
 	public void start(){
 		try {
 			troll = ImageIO.read(getClass().getResourceAsStream(fileName));
+
 			trollIcon = new ImageIcon(this.getClass().getResource(fileName));
 			if(fileName.endsWith(".gif")){
 				isGif = true;
@@ -112,7 +113,7 @@ public class FacePainter implements Runnable, WebcamPanel.Painter {
 				temp.paintIcon(this.panel, g2, x, y);
 			}
 			else{
-				g2.drawImage(troll, x, y, w, h, null);
+				g2.drawImage(troll, (int)(x - (w*0.15)), (int)(y - (h*(0.4 - 0.25))), (int)(w * 1.3), (int)(h * 1.6), null);
 			}
 
 
