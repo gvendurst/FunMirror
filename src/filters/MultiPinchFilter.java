@@ -31,7 +31,7 @@ public class MultiPinchFilter implements WebcamImageTransformer, WebcamMotionLis
 		}
 		*/
 
-		System.out.println("Editing");
+		//System.out.println("Editing");
 		BufferedImage retVal = image;
 		boolean first = true;
 		ArrayList<Point> theList = null;
@@ -43,20 +43,20 @@ public class MultiPinchFilter implements WebcamImageTransformer, WebcamMotionLis
 		for (PointDouble p : PointListToPointDoubleList(theList)) {
 			PINCH_FILTER.setCentreX((float)p.getX());
 			PINCH_FILTER.setCentreY((float)p.getY());
-			System.out.println("(" + PINCH_FILTER.getCentreX() + " , " + PINCH_FILTER.getCentreY() + ")");
-			System.out.println("2");
+			//System.out.println("(" + PINCH_FILTER.getCentreX() + " , " + PINCH_FILTER.getCentreY() + ")");
+			//System.out.println("2");
 			retVal = PINCH_FILTER.filter(retVal, null);
 		}
 		//pointSem.release();
 
-		System.out.println("3");
+		//System.out.println("3");
 
 		return retVal;
 	}
 
 	@Override
 	public void motionDetected(WebcamMotionEvent webcamMotionEvent) {
-		System.out.println("Acquiring");
+		//System.out.println("Acquiring");
 		if(lastPoints == null){
 			lastPoints = PointListToPointDoubleList(webcamMotionEvent.getPoints());
 		}
@@ -64,10 +64,10 @@ public class MultiPinchFilter implements WebcamImageTransformer, WebcamMotionLis
 			lastPoints2 = PointListToPointDoubleList(webcamMotionEvent.getPoints());
 		}
 		else{
-			System.out.println("No write action");
+			//System.out.println("No write action");
 		}
 
-		System.out.println(lastPoints);
+		//System.out.println(lastPoints);
 	}
 
 	private PointDouble PointPixelsToPercentage(Point p, int totalX, int totalY){
