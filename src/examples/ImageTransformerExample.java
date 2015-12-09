@@ -24,6 +24,8 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 	private static final RippleFilter RIPPLE_FILTER = new RippleFilter();
 	private static final GlowFilter GLOW_FILTER = new GlowFilter();
 	private static final WaterFilter WATER_FILTER = new WaterFilter();
+	private static final CrystallizeFilter CRYSTALLIZE_FILTER = new CrystallizeFilter();
+	private static final EmbossFilter EMBOSS_FILTER = new EmbossFilter();
 
 	public ImageTransformerExample() {
 
@@ -32,12 +34,8 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 		webcam.setImageTransformer(this);
 		webcam.open();
 
-		WATER_FILTER.setAmplitude((0.1f));
-		WATER_FILTER.setPhase(50.0f);
-		WATER_FILTER.setRadius((700.0f));
-		WATER_FILTER.setWavelength((200.0f));
-		//WATER_FILTER.setEdgeAction(10);
-		//WATER_FILTER.setInterpolation(5);
+		CRYSTALLIZE_FILTER.setScale(5);
+		CRYSTALLIZE_FILTER.setRandomness(1.0f);
 
 		JFrame window = new JFrame("Test Transformer");
 
@@ -53,7 +51,7 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 
 	@Override
 	public BufferedImage transform(BufferedImage image) {
-		return WATER_FILTER.filter(image, null);
+		return EMBOSS_FILTER.filter(image, null);
 	}
 
 	public static void main(String[] args) {
