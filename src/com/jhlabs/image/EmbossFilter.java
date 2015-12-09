@@ -33,6 +33,11 @@ public class EmbossFilter extends WholeImageFilter {
 	public EmbossFilter() {
 	}
 
+	public EmbossFilter(float azimuth, float elevation) {
+		this.azimuth = azimuth;
+		this.elevation = elevation;
+	}
+
 	public void setAzimuth(float azimuth) {
 		this.azimuth = azimuth;
 	}
