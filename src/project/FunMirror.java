@@ -23,6 +23,8 @@ public class FunMirror implements GameModeSwitch {
 	private filters.WaveFilter wf;
 	private filters.GrayFilter gray;
 	private filters.FrameFilter ff;
+	private filters.CrystalFilter cf;
+	private filters.EmbossFilter ef;
 	private PinchFilter2 pf;
 	private MultiPinchFilter mpf;
 	private GameModeSwitchDetector gms;
@@ -42,6 +44,8 @@ public class FunMirror implements GameModeSwitch {
 		mpf = new MultiPinchFilter();
 		wef = new WaterEffectFilter();
 		ff = new filters.FrameFilter();
+		cf = new filters.CrystalFilter();
+		ef = new filters.EmbossFilter();
 
 
 		bgf = new BackgroundFilter();
@@ -150,7 +154,7 @@ public class FunMirror implements GameModeSwitch {
 				webcam.setImageTransformer(pf); // PinchFilter
 				break;
 			case 3:
-				webcam.setImageTransformer(gray); // GrayFilter
+				webcam.setImageTransformer(ef); // EmbossFilter
 				break;
 			case 4:
 				webcam.setImageTransformer(wef); // WaterEffectFilter, líkist smá pinch filter eftir allar breytingarnar
