@@ -34,9 +34,6 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 		webcam.setImageTransformer(this);
 		webcam.open();
 
-		CRYSTALLIZE_FILTER.setScale(5);
-		CRYSTALLIZE_FILTER.setRandomness(1.0f);
-
 		JFrame window = new JFrame("Test Transformer");
 
 		WebcamPanel panel = new WebcamPanel(webcam);

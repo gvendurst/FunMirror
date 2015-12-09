@@ -3,6 +3,7 @@ package filters;
 import com.github.sarxos.webcam.WebcamEvent;
 import com.github.sarxos.webcam.WebcamImageTransformer;
 import com.github.sarxos.webcam.WebcamListener;
+import com.jhlabs.image.ImageMath;
 
 import java.awt.image.BufferedImage;
 
@@ -11,7 +12,7 @@ import java.awt.image.BufferedImage;
  */
 public class EmbossFilter implements WebcamImageTransformer, WebcamListener {
 
-    private static final com.jhlabs.image.EmbossFilter EMBOSS_FILTER = new com.jhlabs.image.EmbossFilter();
+    private static final com.jhlabs.image.EmbossFilter EMBOSS_FILTER = new com.jhlabs.image.EmbossFilter(400.0f * ImageMath.PI / 180.0f,70.0f * ImageMath.PI / 180.0f);
 
     public EmbossFilter() {
 
