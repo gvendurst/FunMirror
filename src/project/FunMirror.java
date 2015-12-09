@@ -106,7 +106,7 @@ public class FunMirror implements GameModeSwitch{
 				break;
 			case 3:
 				webcam.setImageTransformer(wef); // WaterEffectFilter, líkist smá pinch filter eftir allar breytingarnar
-				break;							 // en við getum experimentað meira. 
+				break;							 // en við getum experimentað meira.
 			case 4:
 				webcam.setImageTransformer(ff); // FrameFilter
 				break;
