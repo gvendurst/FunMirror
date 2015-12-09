@@ -40,8 +40,6 @@ public class FunMirror implements GameModeSwitch {
 		wf = new filters.WaveFilter();
 		pf = new PinchFilter2();
 		mpf = new MultiPinchFilter();
-		//ff = new filters.FrameFilter();
-
 		wef = new WaterEffectFilter();
 		ff = new filters.FrameFilter();
 
@@ -161,7 +159,7 @@ public class FunMirror implements GameModeSwitch {
 				webcam.setImageTransformer(ff); // FrameFilter
 				break;
 			case 6:
-				webcam.setImageTransformer(mpf);
+				webcam.setImageTransformer(mpf); // Multi Pinch Filter
 				break;
 		}
 

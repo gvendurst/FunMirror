@@ -2,6 +2,7 @@ package filters;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -25,16 +26,16 @@ public class FrameFilter implements WebcamImageTransformer {
         int w = image.getWidth();
         int h = image.getHeight();
 
-        BufferedImage modified = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-
-        Graphics2D g2 = modified.createGraphics();
+        BufferedImage bgImage = createCompatibleDestImage(image, null);
+        
+        Graphics2D g2 = bgImage.createGraphics();
         g2.drawImage(image, null, 0, 0);
         g2.drawImage(funFrame, null, 0, 0);
         g2.dispose();
 
-        modified.flush();
-
-        return modified;
+        bgImage.flush();
+    
+        return bgImage;
     }
 
     private static final BufferedImage getImage(String image) {
@@ -43,6 +44,12 @@ public class FrameFilter implements WebcamImageTransformer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private BufferedImage createCompatibleDestImage(BufferedImage src, ColorModel dstCM) {
+        if ( dstCM == null )
+            dstCM = src.getColorModel();
+        return new BufferedImage(dstCM, dstCM.createCompatibleWritableRaster(src.getWidth(), src.getHeight()), dstCM.isAlphaPremultiplied(), null);
     }
 }
 
