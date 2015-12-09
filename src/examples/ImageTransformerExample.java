@@ -26,6 +26,7 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 	private static final WaterFilter WATER_FILTER = new WaterFilter();
 	private static final CrystallizeFilter CRYSTALLIZE_FILTER = new CrystallizeFilter();
 	private static final EmbossFilter EMBOSS_FILTER = new EmbossFilter();
+	private static final FieldWarpFilter FIELD_WARP_FILTER = new FieldWarpFilter();
 
 	public ImageTransformerExample() {
 
@@ -33,6 +34,9 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
 		webcam.setImageTransformer(this);
 		webcam.open();
+
+		FIELD_WARP_FILTER.setAmount(0.2f);
+		//FIELD_WARP_FILTER.setPower(0.1f);
 
 		JFrame window = new JFrame("Test Transformer");
 
@@ -48,7 +52,7 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 
 	@Override
 	public BufferedImage transform(BufferedImage image) {
-		return EMBOSS_FILTER.filter(image, null);
+		return FIELD_WARP_FILTER.filter(image, null);
 	}
 
 	public static void main(String[] args) {
