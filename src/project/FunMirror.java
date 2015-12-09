@@ -117,7 +117,7 @@ public class FunMirror implements GameModeSwitch {
 
 	private void setupGameModeSwitch(){
 		gms = new GameModeSwitchDetector();
-		gms.setMinTime(5000);
+		gms.setMinTime(3000);
 		detector.addMotionListener(gms);
 		gms.addGameModeSwitch(this);
 	}

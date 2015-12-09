@@ -9,8 +9,10 @@ import org.openimaj.math.geometry.shape.Rectangle;
 
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.concurrent.Executor;
@@ -26,8 +28,11 @@ public class FacePainter implements Runnable, WebcamPanel.Painter {
 	private WebcamPanel.Painter painter = null;
 	private java.util.List<DetectedFace> faces = null;
 	private BufferedImage troll = null;
+	private ImageIcon trollIcon= null;
 	private Webcam webcam;
 	private WebcamPanel panel;
+	private final String fileName = "/flyingbluepig.gif";
+	private boolean isGif = false;
 
 
 	public FacePainter(Webcam webcam, WebcamPanel panel){
@@ -37,7 +42,12 @@ public class FacePainter implements Runnable, WebcamPanel.Painter {
 
 	public void start(){
 		try {
-			troll = ImageIO.read(getClass().getResourceAsStream("/troll-face.png"));
+			troll = ImageIO.read(getClass().getResourceAsStream(fileName));
+			trollIcon = new ImageIcon(this.getClass().getResource(fileName));
+			if(fileName.endsWith(".gif")){
+				isGif = true;
+			}
+			System.out.println("Height: " + trollIcon.getIconHeight() + ", Weight: " + trollIcon.getIconWidth());
 		}
 		catch (IllegalArgumentException e){
 			System.out.println("Image not found( in class FacePainter)");
@@ -59,11 +69,14 @@ public class FacePainter implements Runnable, WebcamPanel.Painter {
 	}
 
 
+
 	@Override
 	public void paintPanel(WebcamPanel panel, Graphics2D g2) {
 		if (painter != null) {
 			painter.paintPanel(panel, g2);
 		}
+
+
 	}
 
 	@Override
@@ -88,8 +101,23 @@ public class FacePainter implements Runnable, WebcamPanel.Painter {
 			int w = (int) bounds.width + 2 * dx;
 			int h = (int) bounds.height + dy;
 
-			g2.drawImage(troll, x, y, w, h, null);
+			if(isGif) {
+				Image img = trollIcon.getImage();
+				BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+				Graphics g = bi.createGraphics();
+				g.drawImage(img, 0, 0, w, h, null);
+				ImageIcon temp = new ImageIcon(bi);
+
+
+				temp.paintIcon(this.panel, g2, x, y);
+			}
+			else{
+				g2.drawImage(troll, x, y, w, h, null);
+			}
+
+
 		}
+
 	}
 
 	@Override
