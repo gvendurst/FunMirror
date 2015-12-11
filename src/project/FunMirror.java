@@ -2,11 +2,9 @@ package project;
 
 import com.github.sarxos.webcam.*;
 import filters.*;
-import javafx.scene.paint.Color;
 import utils.Facing;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by Gvendurst on 4.12.2015.
@@ -27,8 +25,10 @@ public class FunMirror implements GameModeSwitch {
 	private TwirlMotionFilter tmf;
 
 	private GameModeSwitchDetector gms;
-	private int currentGameMode = 0;
-	private final int numberOfGameModes = 6;
+	private int currentDistortionGameMode = 0;
+	private int currentImageGameMode = 0;
+	private final int numberOfDistortionGameModes = 6;
+	private final int numberOfImageGameModes = 2;
 	private Webcam webcam;
 	private FacePainter facePainter1;
 	private GifFacePainter facePainter2;
@@ -98,7 +98,8 @@ public class FunMirror implements GameModeSwitch {
 		//facePainter2.setOffsetY(-50);
 
 		//Sets the first gamemode
-		currentGameMode = numberOfGameModes - 1;
+		currentDistortionGameMode = numberOfDistortionGameModes - 1;
+		currentImageGameMode = numberOfImageGameModes - 1;
 		setupGameModeSwitch(panel);
 		//onGameModeSwitch(0);
 
@@ -150,7 +151,7 @@ public class FunMirror implements GameModeSwitch {
 	@Override
 	public void onGameModeSwitch(int args) {
 		//Dispose the current game mode
-		switch (currentGameMode){
+		switch (currentDistortionGameMode){
 			case 1:
 				facePainter1.stop();
 				break;
@@ -170,10 +171,10 @@ public class FunMirror implements GameModeSwitch {
 
 
 		System.out.println("Game mode changed");
-		currentGameMode = (currentGameMode + 1) % numberOfGameModes;
+		currentDistortionGameMode = (currentDistortionGameMode + 1) % numberOfDistortionGameModes;
 
 		//Setup the next game mode
-		switch (currentGameMode){
+		switch (currentDistortionGameMode){
 			case 0:
 				webcam.setImageTransformer(wf); // WaveFilter DONE
 				text.setText("Fun Gamemode Title1");
@@ -201,6 +202,6 @@ public class FunMirror implements GameModeSwitch {
 				break;
 		}
 
-		System.out.println("Current gamemode: " + currentGameMode);
+		System.out.println("Current gamemode: " + currentDistortionGameMode);
 	}
 }
