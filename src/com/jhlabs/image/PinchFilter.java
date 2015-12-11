@@ -43,6 +43,11 @@ public class PinchFilter extends TransformFilter {
 
 	}
 
+	public PinchFilter(float amount, float radius) {
+		this.amount = amount;
+		this.radius = radius;
+	}
+
 	/**
 	 * Set the angle of twirl in radians. 0 means no distortion.
 	 * @param angle the angle of twirl. This is the angle by which pixels at the nearest edge of the image will move.
