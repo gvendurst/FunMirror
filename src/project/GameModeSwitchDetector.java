@@ -12,7 +12,7 @@ public class GameModeSwitchDetector implements WebcamMotionListener{
 	private double minTime;
 	private double lastMotion;
 	private double minArea;
-	private final static double MIN_AREA_DEFAULT = 50;
+	private final static double MIN_AREA_DEFAULT = 40;
 
 	private ArrayList<GameModeSwitch> listeners;
 
