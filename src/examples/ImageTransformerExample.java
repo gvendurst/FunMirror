@@ -35,8 +35,8 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 		webcam.setImageTransformer(this);
 		webcam.open();
 
-		FIELD_WARP_FILTER.setAmount(0.2f);
-		//FIELD_WARP_FILTER.setPower(0.1f);
+		FIELD_WARP_FILTER.setAmount(0.1f);
+		FIELD_WARP_FILTER.setPower(0.5f);
 
 		JFrame window = new JFrame("Test Transformer");
 
