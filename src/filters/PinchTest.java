@@ -15,7 +15,7 @@ import com.jhlabs.image.TwirlFilter;
  */
 public class PinchTest implements WebcamImageTransformer, WebcamListener {
 
-    private static final PinchFilter PINCH_FILTER = new PinchFilter(-0.5f, 150);
+    private static final PinchFilter PINCH_FILTER = new PinchFilter(-1.0f, 300);
 
     public PinchTest() {
 
