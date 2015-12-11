@@ -5,6 +5,7 @@ import filters.*;
 import javafx.scene.paint.Color;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by Gvendurst on 4.12.2015.
