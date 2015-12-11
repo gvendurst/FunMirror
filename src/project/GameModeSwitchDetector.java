@@ -155,7 +155,6 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 
 	@Override
 	public void paintPanel(WebcamPanel panel, Graphics2D g2) {
-		System.out.println("lastPainter: " + lastPainter);
 		if (painter != null) {
 			painter.paintPanel(panel, g2);
 			if(lastPainter != null){
@@ -166,7 +165,6 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 
 	@Override
 	public void paintImage(WebcamPanel panel, BufferedImage image, Graphics2D g2) {
-		System.out.println("lastPainter: " + lastPainter);
 		if (painter != null) {
 			painter.paintImage(panel, image, g2);
 			if(lastPainter != null){
