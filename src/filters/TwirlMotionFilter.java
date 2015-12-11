@@ -24,80 +24,69 @@ import filters.TwirlTest;
  */
 public class TwirlMotionFilter extends JFrame implements WebcamPanel.Painter {
 
-    private final Webcam webcam;
-    private final WebcamPanel panel;
-    private final WebcamMotionDetector detector;
-    private TwirlTest twirlTest;
-    private PinchTest pinchTest;
+	private final Webcam webcam;
+	private final WebcamPanel panel;
+	private final WebcamMotionDetector detector;
+	private TwirlTest twirlTest;
+	private PinchTest pinchTest;
 
-    public TwirlMotionFilter() {
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public TwirlMotionFilter(Webcam webcam, WebcamPanel panel, WebcamMotionDetector detector){
+		this.webcam = webcam;
+		this.panel = panel;
+		this.detector = detector;
 
-        twirlTest = new TwirlTest();
-        pinchTest = new PinchTest();
+		twirlTest = new TwirlTest();
+		pinchTest = new PinchTest();
+	}
 
-        webcam = Webcam.getDefault();
-        webcam.setViewSize(WebcamResolution.VGA.getSize());
-        webcam.open(true);
-        webcam.setImageTransformer(twirlTest);
+	public void start(){
+		webcam.setImageTransformer(twirlTest);
+		panel.setPainter(this);
+	}
 
-        panel = new WebcamPanel(webcam, false);
-        panel.setPainter(this);
-        panel.start();
+	public void stop(){
+		webcam.setImageTransformer(null);
+		panel.setPainter(panel.getDefaultPainter());
+	}
 
-        detector = new WebcamMotionDetector(webcam);
-        detector.setInterval(100); // one check per 500 ms
-        detector.setPixelThreshold(20);
-        detector.start();
+	@Override
+	public void paintPanel(WebcamPanel panel, Graphics2D g2) {
+		panel.getDefaultPainter().paintPanel(panel, g2);
+	}
 
-        add(panel);
+	@Override
+	public void paintImage(WebcamPanel panel, BufferedImage image, Graphics2D g2) {
 
-        pack();
-        setVisible(true);
-    }
+		double s = detector.getMotionArea();
+		Point cog = detector.getMotionCog();
+		Point cog2 = detector.getMotionCog();
 
-    public static void main(String[] args) throws IOException {
-        new TwirlMotionFilter();
-    }
+		Graphics2D g = image.createGraphics();
+		g.setColor(Color.WHITE);
+		//g.drawString(String.format("Area: %.2f%%", s), 10, 20);
 
-    @Override
-    public void paintPanel(WebcamPanel panel, Graphics2D g2) {
-        panel.getDefaultPainter().paintPanel(panel, g2);
-    }
+		if (detector.isMotion()) {
+			g.setStroke(new BasicStroke(2));
+			//g.setColor(Color.RED);
+			//g.drawOval(cog.x - 5, cog.y - 5, 10, 10);
+			float x = ((((float)cog2.getX() - 0) * (1 - 0)) / (640 - 0)) + 0;
+			float y = ((((float)cog2.getY() - 0) * (1 - 0)) / (480 - 0)) + 0;
+			twirlTest = new TwirlTest(x, y);
+			if(detector.getMotionArea() > 35) {
+				pinchTest = new PinchTest(x, y);
+				webcam.setImageTransformer(pinchTest);
+			}
+			else {
+				webcam.setImageTransformer(twirlTest);
+			}
+		} else {
+			//g.setColor(Color.GREEN);
+			//g.drawRect(cog.x - 5, cog.y - 5, 10, 10);
+		}
 
-    @Override
-    public void paintImage(WebcamPanel panel, BufferedImage image, Graphics2D g2) {
+		g.dispose();
 
-        double s = detector.getMotionArea();
-        Point cog = detector.getMotionCog();
-        Point cog2 = detector.getMotionCog();
-
-        Graphics2D g = image.createGraphics();
-        g.setColor(Color.WHITE);
-        g.drawString(String.format("Area: %.2f%%", s), 10, 20);
-
-        if (detector.isMotion()) {
-            g.setStroke(new BasicStroke(2));
-            g.setColor(Color.RED);
-            g.drawOval(cog.x - 5, cog.y - 5, 10, 10);
-            float x = ((((float)cog2.getX() - 0) * (1 - 0)) / (640 - 0)) + 0;
-            float y = ((((float)cog2.getY() - 0) * (1 - 0)) / (480 - 0)) + 0;
-            twirlTest = new TwirlTest(x, y);
-            if(detector.getMotionArea() > 35) {
-                pinchTest = new PinchTest(x, y);
-                webcam.setImageTransformer(pinchTest);
-            }
-            else {
-                webcam.setImageTransformer(twirlTest);
-            }
-        } else {
-            g.setColor(Color.GREEN);
-            g.drawRect(cog.x - 5, cog.y - 5, 10, 10);
-        }
-
-        g.dispose();
-
-        panel.getDefaultPainter().paintImage(panel, image, g2);
-    }
+		panel.getDefaultPainter().paintImage(panel, image, g2);
+	}
 }
