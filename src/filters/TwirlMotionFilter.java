@@ -31,7 +31,7 @@ public class TwirlMotionFilter extends JFrame implements WebcamPanel.Painter {
     private PinchTest pinchTest;
 
     public TwirlMotionFilter() {
-        
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         twirlTest = new TwirlTest();
