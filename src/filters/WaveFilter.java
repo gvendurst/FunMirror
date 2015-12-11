@@ -14,7 +14,7 @@ import com.jhlabs.image.RippleFilter;
 public class WaveFilter implements WebcamImageTransformer, WebcamListener {
 
     // Gerði annan Constructor fyrir RippleFilter til að prufa effectana. (5.0f, 0, 16.0f) er default.
-    private static final RippleFilter RIPPLE_FILTER = new RippleFilter(25.0f, 0, 16.0f);
+    private static final RippleFilter RIPPLE_FILTER = new RippleFilter(5.0f, 10.0f, 20.0f);
 
     public WaveFilter() {
 

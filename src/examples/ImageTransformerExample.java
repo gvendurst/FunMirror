@@ -21,12 +21,12 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 	private static final CircleFilter CIRCLE_FILTER = new CircleFilter();
 	private static final DissolveFilter DISSOLVE_FILTER = new DissolveFilter();
 	private static final NoiseFilter NOISE_FILTER = new NoiseFilter();
-	private static final RippleFilter RIPPLE_FILTER = new RippleFilter();
 	private static final GlowFilter GLOW_FILTER = new GlowFilter();
 	private static final WaterFilter WATER_FILTER = new WaterFilter();
 	private static final CrystallizeFilter CRYSTALLIZE_FILTER = new CrystallizeFilter();
 	private static final EmbossFilter EMBOSS_FILTER = new EmbossFilter();
 	private static final FieldWarpFilter FIELD_WARP_FILTER = new FieldWarpFilter();
+	private static final RippleFilter RIPPLE_FILTER = new RippleFilter(5.0f, 10.0f, 20.0f);
 
 	public ImageTransformerExample() {
 
@@ -52,7 +52,7 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 
 	@Override
 	public BufferedImage transform(BufferedImage image) {
-		return FIELD_WARP_FILTER.filter(image, null);
+		return RIPPLE_FILTER.filter(image, null);
 	}
 
 	public static void main(String[] args) {
