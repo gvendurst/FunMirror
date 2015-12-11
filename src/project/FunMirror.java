@@ -2,14 +2,9 @@ package project;
 
 import com.github.sarxos.webcam.*;
 import filters.*;
-import org.openimaj.image.processing.face.detection.DetectedFace;
-import org.openimaj.image.processing.face.detection.HaarCascadeDetector;
+import javafx.scene.paint.Color;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 /**
  * Created by Gvendurst on 4.12.2015.
@@ -18,7 +13,7 @@ public class FunMirror implements GameModeSwitch {
 	private static FunMirror funMirror;
 	private MotionDistortionFilter mdf = new MotionDistortionFilter();
 	private WebcamMotionDetector detector;
-	private BackgroundFilter bgf;
+	//private BackgroundFilter bgf;
 	private filters.WaterEffectFilter wef;
 	private filters.WaveFilter wf;
 	private filters.GrayFilter gray;
@@ -29,9 +24,11 @@ public class FunMirror implements GameModeSwitch {
 	private MultiPinchFilter mpf;
 	private GameModeSwitchDetector gms;
 	private int currentGameMode = 0;
-	private final int numberOfGameModes = 6;
+	private final int numberOfGameModes = 5;
 	private Webcam webcam;
-	private FacePainter facePainter;
+	private FacePainter facePainter1;
+	private GifFacePainter facePainter2;
+	private JTextArea text = new JTextArea("");
 
 	public FunMirror() {
 
@@ -47,10 +44,13 @@ public class FunMirror implements GameModeSwitch {
 		cf = new filters.CrystalFilter();
 		ef = new filters.EmbossFilter();
 
+		// Gamemode texta stillingar
+		text.setOpaque(false);
+		text.setEnabled(false);
 
-		bgf = new BackgroundFilter();
-		bgf.setMaxArea(1);
-		bgf.setMinTime(5000);
+		//bgf = new BackgroundFilter();
+		//bgf.setMaxArea(1);
+		//bgf.setMinTime(5000);
 		webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
 
@@ -62,7 +62,7 @@ public class FunMirror implements GameModeSwitch {
 		onGameModeSwitch(0);
 
 
-		webcam.addWebcamListener(bgf);
+		//webcam.addWebcamListener(bgf);
 		//webcam.addWebcamListener(wf);
 
 
@@ -71,22 +71,30 @@ public class FunMirror implements GameModeSwitch {
 		WebcamPanel panel = new WebcamPanel(webcam);
 		panel.setFPSDisplayed(true);
 		panel.setFillArea(true);
-
+		panel.add(text);
 
 		detector = new WebcamMotionDetector(webcam);
 		detector.setInterval(100); // one check per x ms
 		detector.setPixelThreshold(20);
 
 		detector.addMotionListener(mdf);
-		detector.addMotionListener(bgf);
+		//detector.addMotionListener(bgf);
 		detector.addMotionListener(mpf);
 		detector.setMaxMotionPoints(3);
 		detector.setPointRange(40);
 		setupGameModeSwitch();
 		detector.start();
 
+		panel.setMirrored(true);
 
-		facePainter = new FacePainter(webcam, panel);
+		facePainter1 = new FacePainter(webcam, panel);
+		//facePainter1.setScaleX(1.3);
+		//facePainter1.setScaleY(1.4);
+
+		facePainter2 = new GifFacePainter(webcam, panel);
+		//facePainter2.setScaleX(1.4);
+		//facePainter2.setScaleY(1.6);
+		//facePainter2.setOffsetY(-50);
 
 		window.add(panel);
 		window.pack();
@@ -131,7 +139,10 @@ public class FunMirror implements GameModeSwitch {
 		//Dispose the current game mode
 		switch (currentGameMode){
 			case 1:
-				facePainter.stop();
+				facePainter1.stop();
+				break;
+			case 3:
+				facePainter2.stop();
 				break;
 			default:
 				webcam.setImageTransformer(null);
@@ -146,24 +157,27 @@ public class FunMirror implements GameModeSwitch {
 		switch (currentGameMode){
 			case 0:
 				webcam.setImageTransformer(wf); // WaveFilter
+				text.setText("Fun Gamemode Title1");
 				break;
 			case 1:
-				facePainter.start();
+				facePainter1.start();
+				text.setText("Fun Gamemode Title2");
 				break;
 			case 2:
 				webcam.setImageTransformer(pf); // PinchFilter
+				text.setText("Fun Gamemode Title3");
 				break;
 			case 3:
-				webcam.setImageTransformer(ef); // EmbossFilter
+				facePainter2.start();
+				text.setText("Fun Gamemode Title4");
 				break;
 			case 4:
-				webcam.setImageTransformer(wef); // WaterEffectFilter, líkist smá pinch filter eftir allar breytingarnar
-				break;							 // en við getum experimentað meira. 
+				webcam.setImageTransformer(wef);     // WaterEffectFilter, líkist smá pinch filter eftir allar breytingarnar
+				text.setText("Fun Gamemode Title5"); // en við getum experimentað meira.
+				break;
 			case 5:
 				webcam.setImageTransformer(ff); // FrameFilter
-				break;
-			case 6:
-				webcam.setImageTransformer(mpf); // Multi Pinch Filter
+				text.setText("Fun Gamemode Title6");
 				break;
 		}
 

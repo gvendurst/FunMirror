@@ -5,15 +5,13 @@ import com.github.sarxos.webcam.WebcamPanel;
 import org.openimaj.image.ImageUtilities;
 import org.openimaj.image.processing.face.detection.DetectedFace;
 import org.openimaj.image.processing.face.detection.HaarCascadeDetector;
-import org.openimaj.math.geometry.shape.Rectangle;
+import org.openimaj.math.geometry.shape.*;
 import project.FunMirror;
-
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageOp;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.concurrent.Executor;
@@ -22,7 +20,7 @@ import java.util.concurrent.Executors;
 /**
  * Created by Gvendurst on 9.12.2015.
  */
-public class FacePainter implements Runnable, WebcamPanel.Painter {
+public class GifFacePainter implements Runnable, WebcamPanel.Painter {
 	private static final Executor EXECUTOR = Executors.newSingleThreadExecutor();
 	private static final HaarCascadeDetector detector = new HaarCascadeDetector();
 	private static final Stroke STROKE = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.0f, new float[] { 1.0f }, 0.0f);
@@ -32,11 +30,11 @@ public class FacePainter implements Runnable, WebcamPanel.Painter {
 	private ImageIcon trollIcon= null;
 	private Webcam webcam;
 	private WebcamPanel panel;
-	private final String fileName = "/jesus2.png";
+	private final String fileName = "/haus.gif";
 	private boolean isGif = false;
 
 
-	public FacePainter(Webcam webcam, WebcamPanel panel){
+	public GifFacePainter(Webcam webcam, WebcamPanel panel){
 		this.webcam = webcam;
 		this.panel = panel;
 	}
@@ -94,7 +92,7 @@ public class FacePainter implements Runnable, WebcamPanel.Painter {
 		Iterator<DetectedFace> dfi = faces.iterator();
 		while (dfi.hasNext()) {
 			DetectedFace face = dfi.next();
-			Rectangle bounds = face.getBounds();
+			org.openimaj.math.geometry.shape.Rectangle bounds = face.getBounds();
 
 			int dx = (int) (0.1 * bounds.width);
 			int dy = (int) (0.2 * bounds.height);
@@ -111,7 +109,7 @@ public class FacePainter implements Runnable, WebcamPanel.Painter {
 				ImageIcon temp = new ImageIcon(bi);
 
 
-				temp.paintIcon(this.panel, g2, FunMirror.getScreenSizeX() - (int)(x + (w*1.15)), (int)(y - (h*(0.4 - 0.25))));
+				temp.paintIcon(this.panel, g2, FunMirror.getScreenSizeX() - (int)(x + (w*1.15)), (int)(y - (h*(0.4 - 0.0))));
 			}
 			else{
 				g2.drawImage(troll, FunMirror.getScreenSizeX() - (int)(x + (w*1.15)), (int)(y - (h*(0.4 - 0.25))), (int)(w * 1.3), (int)(h * 1.6), null);
