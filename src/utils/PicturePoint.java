@@ -34,4 +34,6 @@ public class PicturePoint extends Point {
 		this(x, y, facing);
 		this.id = id;
 	}
+
+
 }

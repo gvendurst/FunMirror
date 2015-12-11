@@ -138,8 +138,8 @@ public class FunMirror implements GameModeSwitch {
 	private void setupGameModeSwitch(WebcamPanel panel){
 		gms = new GameModeSwitchDetector(panel);
 		gms.setMinTime(3000);
-		gms.addPoint(100,100, Facing.LEFT);
-		gms.addPoint(getScreenSizeX() - 100,100, Facing.RIGHT);
+		gms.addPoint(100,100, Facing.LEFT, 0);
+		gms.addPoint(getScreenSizeX() - 100,100, Facing.RIGHT, 1);
 		gms.setPointRadius(40);
 		gms.setHandScale(0.2);
 		gms.setMinPoints(2);
