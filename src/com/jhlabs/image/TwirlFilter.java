@@ -27,10 +27,10 @@ import java.awt.image.*;
  */
 public class TwirlFilter extends TransformFilter {
 	
-	private float angle = 0;
+	private float angle = 1.0f;
 	private float centreX = 0.5f;
 	private float centreY = 0.5f;
-	private float radius = 100;
+	private float radius = 150;
 
 	private float radius2 = 0;
 	private float icentreX;
@@ -48,6 +48,12 @@ public class TwirlFilter extends TransformFilter {
 	 * @param angle the angle of twirl. This is the angle by which pixels at the nearest edge of the image will move.
      * @see #getAngle
 	 */
+	public TwirlFilter(float angle, float centreX, float centreY) {
+		this.angle = angle;
+		this.centreX = centreX;
+		this.centreY = centreY;
+	}
+
 	public void setAngle(float angle) {
 		this.angle = angle;
 	}

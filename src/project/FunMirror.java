@@ -164,7 +164,7 @@ public class FunMirror implements GameModeSwitch {
 		//Setup the next game mode
 		switch (currentGameMode){
 			case 0:
-				webcam.setImageTransformer(wf); // WaveFilter
+				webcam.setImageTransformer(wf); // WaveFilter DONE
 				text.setText("Fun Gamemode Title1");
 				break;
 			case 1:

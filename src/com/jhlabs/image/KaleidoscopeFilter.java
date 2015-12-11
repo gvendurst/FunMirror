@@ -29,7 +29,7 @@ public class KaleidoscopeFilter extends TransformFilter {
 	private float angle2 = 0;
 	private float centreX = 0.5f;
 	private float centreY = 0.5f;
-	private int sides = 3;
+	private int sides = 1;
 	private float radius = 0;
 
 	private float icentreX;

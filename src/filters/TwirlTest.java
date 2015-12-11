@@ -7,17 +7,22 @@ import com.github.sarxos.webcam.WebcamListener;
 import java.awt.image.BufferedImage;
 
 import com.jhlabs.image.RippleFilter;
+import com.jhlabs.image.TwirlFilter;
 
 /**
  * Created by Hoddi on 7.12.2015.
  */
-public class WaveFilter implements WebcamImageTransformer, WebcamListener {
+public class TwirlTest implements WebcamImageTransformer, WebcamListener {
 
-    // Gerði annan Constructor fyrir RippleFilter til að prufa effectana. (5.0f, 0, 16.0f) er default.
-    private static final RippleFilter RIPPLE_FILTER = new RippleFilter(5.0f, 10.0f, 20.0f);
+    private static final TwirlFilter TWIRL_FILTER = new TwirlFilter(1.0f, 0.5f, 0.5f);
 
-    public WaveFilter() {
+    public TwirlTest() {
 
+    }
+
+    public TwirlTest(float x, float y) {
+        TWIRL_FILTER.setCentreX(x);
+        TWIRL_FILTER.setCentreY(y);
     }
 
     @Override
@@ -41,6 +46,6 @@ public class WaveFilter implements WebcamImageTransformer, WebcamListener {
     }
 
     public BufferedImage transform(BufferedImage image) {
-        return RIPPLE_FILTER.filter(image, null);
+        return TWIRL_FILTER.filter(image, null);
     }
 }

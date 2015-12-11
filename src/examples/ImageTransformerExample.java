@@ -21,12 +21,16 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 	private static final CircleFilter CIRCLE_FILTER = new CircleFilter();
 	private static final DissolveFilter DISSOLVE_FILTER = new DissolveFilter();
 	private static final NoiseFilter NOISE_FILTER = new NoiseFilter();
-	private static final RippleFilter RIPPLE_FILTER = new RippleFilter();
 	private static final GlowFilter GLOW_FILTER = new GlowFilter();
 	private static final WaterFilter WATER_FILTER = new WaterFilter();
 	private static final CrystallizeFilter CRYSTALLIZE_FILTER = new CrystallizeFilter();
 	private static final EmbossFilter EMBOSS_FILTER = new EmbossFilter();
+	private static final RippleFilter RIPPLE_FILTER = new RippleFilter(5.0f, 10.0f, 20.0f);
 	private static final FieldWarpFilter FIELD_WARP_FILTER = new FieldWarpFilter();
+	private static final KaleidoscopeFilter KALEIDOSCOPE_FILTER = new KaleidoscopeFilter();
+	private static final MarbleFilter MARBLE_FILTER = new MarbleFilter();
+	private static final TwirlFilter TWIRL_FILTER = new TwirlFilter(1.0f, 0.5f, 0.5f);
+	private static final PinchFilter PINCH_FILTER = new PinchFilter();
 
 	public ImageTransformerExample() {
 
@@ -35,8 +39,11 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 		webcam.setImageTransformer(this);
 		webcam.open();
 
-		FIELD_WARP_FILTER.setAmount(0.2f);
-		//FIELD_WARP_FILTER.setPower(0.1f);
+		FIELD_WARP_FILTER.setAmount(0.1f);
+		FIELD_WARP_FILTER.setPower(0.5f);
+
+		PINCH_FILTER.setAmount(-0.5f);
+		PINCH_FILTER.setRadius(150);
 
 		JFrame window = new JFrame("Test Transformer");
 
@@ -52,7 +59,7 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 
 	@Override
 	public BufferedImage transform(BufferedImage image) {
-		return FIELD_WARP_FILTER.filter(image, null);
+		return PINCH_FILTER.filter(image, null);
 	}
 
 	public static void main(String[] args) {

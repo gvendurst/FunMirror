@@ -54,10 +54,10 @@ public class FieldWarpFilter extends TransformFilter {
 
 	public FieldWarpFilter() {
 
-		inLines[0] = new Line(200,1,200,500);
-		inLines[1] = new Line(30,400,700,500);
-		outLines[0] = new Line(300,1,300,500);
-		outLines[1] = new Line(40,100,900,120);
+		inLines[1] = new Line(200,1,200,500);
+		inLines[0] = new Line(30,100,900,500);
+		outLines[1] = new Line(300,1,300,500);
+		outLines[0] = new Line(40,400,700,120);
 	}
 
 	/**

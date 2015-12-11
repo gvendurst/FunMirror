@@ -26,8 +26,8 @@ import com.jhlabs.math.*;
 public class MarbleFilter extends TransformFilter {
 
 	private float[] sinTable, cosTable;
-	private float xScale = 4;
-	private float yScale = 4;
+	private float xScale = 8;
+	private float yScale = 8;
 	private float amount = 1;
 	private float turbulence = 1;
 	
