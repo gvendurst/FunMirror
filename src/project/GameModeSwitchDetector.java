@@ -33,6 +33,7 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 	private WebcamPanel panel;
 	private WebcamPanel.Painter painter;
 	private double handScale = 0.25;
+	private ArrayList<PicturePoint> pointsMovedThisTime = new ArrayList<>();
 
 	private ArrayList<GameModeSwitch> listeners;
 
@@ -47,6 +48,10 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 		painter = panel.getPainter();
 		lastPainter = painter;
 		panel.setPainter(this);
+	}
+
+	public void addPoint(int x, int y, Facing facing, int id){
+		points.add(new PicturePoint(x,y,facing, id));
 	}
 
 	public void addPoint(int x, int y, Facing facing){
@@ -103,6 +108,7 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 
 	@Override
 	public void motionDetected(WebcamMotionEvent webcamMotionEvent) {
+		pointsMovedThisTime.clear();
 		System.out.println("Area: " + webcamMotionEvent.getArea());
 
 		if((System.currentTimeMillis() - lastMotion) >= minTime){
@@ -122,7 +128,7 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 					if (pp.distanceSq(p.getX(), p.getY()) <= pointRadius*pointRadius) {
 						numberOfPoints++;
 						if(numberOfPoints >= minPoints){
-							pointMoved(pp);
+							pointsMovedThisTime.add(pp);
 							break;
 						}
 					}
@@ -132,21 +138,17 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 			}
 		}
 
+		if(!pointsMovedThisTime.isEmpty()){
+			onGameModeSwitch(0);
+		}
 	}
 
-	private void pointMoved(PicturePoint point){
-		System.out.println("Point (" + point.x + "," + point.y + ") moved. YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY!");
-
-		//TODO: Implement further when implementation is clearer
-
-		onGameModeSwitch();
-	}
 
 	public void initialGameModeSwitch(){
-		onGameModeSwitch();
+		onGameModeSwitch(0);
 	}
 
-	private void onGameModeSwitch(){
+	private void onGameModeSwitch(int args){
 		lastMotion = System.currentTimeMillis();
 		panel.setPainter(lastPainter);
 		for(GameModeSwitch g : listeners){
