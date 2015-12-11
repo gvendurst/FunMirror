@@ -40,11 +40,9 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 		webcam.setImageTransformer(this);
 		webcam.open();
 
-		FIELD_WARP_FILTER.setAmount(0.1f);
+		FIELD_WARP_FILTER.setAmount(0.4f);
 		FIELD_WARP_FILTER.setPower(0.5f);
-
-		PINCH_FILTER.setAmount(-0.5f);
-		PINCH_FILTER.setRadius(150);
+		FIELD_WARP_FILTER.setStrength(0.5f);
 
 		JFrame window = new JFrame("Test Transformer");
 
@@ -60,7 +58,7 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 
 	@Override
 	public BufferedImage transform(BufferedImage image) {
-		return PINCH_FILTER.filter(image, null);
+		return FIELD_WARP_FILTER.filter(image, null);
 	}
 
 	public static void main(String[] args) {

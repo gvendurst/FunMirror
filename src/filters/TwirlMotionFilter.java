@@ -28,6 +28,8 @@ public class TwirlMotionFilter extends JFrame implements WebcamPanel.Painter {
 	private final WebcamPanel panel;
 	private final WebcamMotionDetector detector;
 	private TwirlTest twirlTest;
+	private TwirlTest twirlTest2;
+	private TwirlTest twirlTest3;
 	private PinchTest pinchTest;
 
 

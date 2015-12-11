@@ -196,7 +196,7 @@ public class FunMirror implements GameModeSwitch {
 				text.setText("Fun Gamemode Title5"); // en við getum experimentað meira.
 				break;
 			case 5:
-				tmf.start(); // FrameFilter
+				tmf.start(); // TwirlMotionFilter
 				text.setText("Fun Gamemode Title6");
 				break;
 		}
