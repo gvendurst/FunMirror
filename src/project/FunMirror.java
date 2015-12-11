@@ -146,6 +146,9 @@ public class FunMirror implements GameModeSwitch {
 				break;
 			default:
 				webcam.setImageTransformer(null);
+				if(gms != null) {
+					gms.setMinAreaDefault();
+				}
 				break;
 		}
 
@@ -172,6 +175,7 @@ public class FunMirror implements GameModeSwitch {
 				text.setText("Fun Gamemode Title4");
 				break;
 			case 4:
+				gms.setMinArea(30);
 				webcam.setImageTransformer(wef);     // WaterEffectFilter, líkist smá pinch filter eftir allar breytingarnar
 				text.setText("Fun Gamemode Title5"); // en við getum experimentað meira.
 				break;
