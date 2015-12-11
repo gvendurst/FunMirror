@@ -7,6 +7,7 @@ import org.openimaj.image.processing.face.detection.DetectedFace;
 import org.openimaj.image.processing.face.detection.HaarCascadeDetector;
 import org.openimaj.math.geometry.shape.Rectangle;
 import project.FunMirror;
+import utils.ImageLoader;
 
 
 import javax.imageio.ImageIO;
@@ -42,21 +43,14 @@ public class FacePainter implements Runnable, WebcamPanel.Painter {
 	}
 
 	public void start(){
-		try {
-			troll = ImageIO.read(getClass().getResourceAsStream(fileName));
+		troll = ImageLoader.loadImage(fileName);
 
-			trollIcon = new ImageIcon(this.getClass().getResource(fileName));
-			if(fileName.endsWith(".gif")){
-				isGif = true;
-			}
-			System.out.println("Height: " + trollIcon.getIconHeight() + ", Weight: " + trollIcon.getIconWidth());
+
+		trollIcon = new ImageIcon(this.getClass().getResource(fileName));
+		if(fileName.endsWith(".gif")){
+			isGif = true;
 		}
-		catch (IllegalArgumentException e){
-			System.out.println("Image not found( in class FacePainter)");
-		}
-		catch (IOException e){
-			System.out.println("Error opening file( in class FacePainter)");
-		}
+		System.out.println("Height: " + trollIcon.getIconHeight() + ", Weight: " + trollIcon.getIconWidth());
 
 
 		painter = panel.getDefaultPainter();
