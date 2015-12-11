@@ -2,7 +2,7 @@ package filters;
 
 import com.github.sarxos.webcam.*;
 import project.FunMirror;
-import project.PointDouble;
+import utils.PointDouble;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

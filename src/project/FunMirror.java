@@ -3,6 +3,7 @@ package project;
 import com.github.sarxos.webcam.*;
 import filters.*;
 import javafx.scene.paint.Color;
+import utils.Facing;
 
 import javax.swing.*;
 import java.awt.*;
@@ -81,9 +82,9 @@ public class FunMirror implements GameModeSwitch {
 		detector.addMotionListener(mdf);
 		//detector.addMotionListener(bgf);
 		detector.addMotionListener(mpf);
-		detector.setMaxMotionPoints(3);
+		//detector.setMaxMotionPoints(3); //Default is 100
 		detector.setPointRange(40);
-		setupGameModeSwitch();
+		setupGameModeSwitch(panel);
 		detector.start();
 
 		panel.setMirrored(true);
@@ -128,9 +129,13 @@ public class FunMirror implements GameModeSwitch {
 		funMirror.start();
 	}
 
-	private void setupGameModeSwitch(){
-		gms = new GameModeSwitchDetector();
+	private void setupGameModeSwitch(WebcamPanel panel){
+		gms = new GameModeSwitchDetector(panel);
 		gms.setMinTime(3000);
+		gms.addPoint(100,100, Facing.LEFT);
+		gms.setPointRadius(40);
+		gms.setHandScale(0.2);
+		gms.setMinPoints(2);
 		detector.addMotionListener(gms);
 		gms.addGameModeSwitch(this);
 	}

@@ -1,4 +1,4 @@
-package project;
+package utils;
 
 /**
  * Created by Gvendurst on 8.12.2015.
