@@ -30,35 +30,24 @@ public class TwirlMotionFilter extends JFrame implements WebcamPanel.Painter {
     private TwirlTest twirlTest;
     private PinchTest pinchTest;
 
-    public TwirlMotionFilter() {
-        
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    public TwirlMotionFilter(Webcam webcam, WebcamPanel panel, WebcamMotionDetector detector){
+        this.webcam = webcam;
+        this.panel = panel;
+        this.detector = detector;
 
         twirlTest = new TwirlTest();
         pinchTest = new PinchTest();
-
-        webcam = Webcam.getDefault();
-        webcam.setViewSize(WebcamResolution.VGA.getSize());
-        webcam.open(true);
-        webcam.setImageTransformer(twirlTest);
-
-        panel = new WebcamPanel(webcam, false);
-        panel.setPainter(this);
-        panel.start();
-
-        detector = new WebcamMotionDetector(webcam);
-        detector.setInterval(100); // one check per 500 ms
-        detector.setPixelThreshold(20);
-        detector.start();
-
-        add(panel);
-
-        pack();
-        setVisible(true);
     }
 
-    public static void main(String[] args) throws IOException {
-        new TwirlMotionFilter();
+    public void start(){
+        webcam.setImageTransformer(twirlTest);
+        panel.setPainter(this);
+    }
+
+    public void stop(){
+        webcam.setImageTransformer(null);
+        panel.setPainter(panel.getDefaultPainter());
     }
 
     @Override
@@ -75,12 +64,12 @@ public class TwirlMotionFilter extends JFrame implements WebcamPanel.Painter {
 
         Graphics2D g = image.createGraphics();
         g.setColor(Color.WHITE);
-        g.drawString(String.format("Area: %.2f%%", s), 10, 20);
+        //g.drawString(String.format("Area: %.2f%%", s), 10, 20);
 
         if (detector.isMotion()) {
             g.setStroke(new BasicStroke(2));
-            g.setColor(Color.RED);
-            g.drawOval(cog.x - 5, cog.y - 5, 10, 10);
+            //g.setColor(Color.RED);
+            //g.drawOval(cog.x - 5, cog.y - 5, 10, 10);
             float x = ((((float)cog2.getX() - 0) * (1 - 0)) / (640 - 0)) + 0;
             float y = ((((float)cog2.getY() - 0) * (1 - 0)) / (480 - 0)) + 0;
             twirlTest = new TwirlTest(x, y);
@@ -92,8 +81,8 @@ public class TwirlMotionFilter extends JFrame implements WebcamPanel.Painter {
                 webcam.setImageTransformer(twirlTest);
             }
         } else {
-            g.setColor(Color.GREEN);
-            g.drawRect(cog.x - 5, cog.y - 5, 10, 10);
+            //g.setColor(Color.GREEN);
+            //g.drawRect(cog.x - 5, cog.y - 5, 10, 10);
         }
 
         g.dispose();

@@ -24,9 +24,11 @@ public class FunMirror implements GameModeSwitch {
 	private filters.EmbossFilter ef;
 	private PinchFilter2 pf;
 	private MultiPinchFilter mpf;
+	private TwirlMotionFilter tmf;
+
 	private GameModeSwitchDetector gms;
 	private int currentGameMode = 0;
-	private final int numberOfGameModes = 5;
+	private final int numberOfGameModes = 6;
 	private Webcam webcam;
 	private FacePainter facePainter1;
 	private GifFacePainter facePainter2;
@@ -46,6 +48,7 @@ public class FunMirror implements GameModeSwitch {
 		cf = new filters.CrystalFilter();
 		ef = new filters.EmbossFilter();
 
+
 		// Gamemode texta stillingar
 		text.setOpaque(false);
 		text.setEnabled(false);
@@ -58,11 +61,6 @@ public class FunMirror implements GameModeSwitch {
 
 
 		webcam.open();
-
-		//Sets the first gamemode
-		currentGameMode = numberOfGameModes - 1;
-		onGameModeSwitch(0);
-
 
 		//webcam.addWebcamListener(bgf);
 		//webcam.addWebcamListener(wf);
@@ -84,10 +82,11 @@ public class FunMirror implements GameModeSwitch {
 		detector.addMotionListener(mpf);
 		//detector.setMaxMotionPoints(3); //Default is 100
 		detector.setPointRange(40);
-		setupGameModeSwitch(panel);
 		detector.start();
 
 		panel.setMirrored(true);
+
+		tmf = new TwirlMotionFilter(webcam, panel, detector);
 
 		facePainter1 = new FacePainter(webcam, panel);
 		//facePainter1.setScaleX(1.3);
@@ -97,6 +96,12 @@ public class FunMirror implements GameModeSwitch {
 		//facePainter2.setScaleX(1.4);
 		//facePainter2.setScaleY(1.6);
 		//facePainter2.setOffsetY(-50);
+
+		//Sets the first gamemode
+		currentGameMode = numberOfGameModes - 1;
+		setupGameModeSwitch(panel);
+		//onGameModeSwitch(0);
+
 
 		window.add(panel);
 		window.pack();
@@ -139,6 +144,7 @@ public class FunMirror implements GameModeSwitch {
 		gms.setMinPoints(2);
 		detector.addMotionListener(gms);
 		gms.addGameModeSwitch(this);
+		gms.initialGameModeSwitch();
 	}
 
 	@Override
@@ -150,6 +156,9 @@ public class FunMirror implements GameModeSwitch {
 				break;
 			case 3:
 				facePainter2.stop();
+				break;
+			case 5:
+				tmf.stop();
 				break;
 			default:
 				webcam.setImageTransformer(null);
@@ -187,7 +196,7 @@ public class FunMirror implements GameModeSwitch {
 				text.setText("Fun Gamemode Title5"); // en við getum experimentað meira.
 				break;
 			case 5:
-				webcam.setImageTransformer(ff); // FrameFilter
+				tmf.start(); // FrameFilter
 				text.setText("Fun Gamemode Title6");
 				break;
 		}

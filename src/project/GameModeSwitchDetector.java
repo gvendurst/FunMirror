@@ -142,6 +142,10 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 		onGameModeSwitch();
 	}
 
+	public void initialGameModeSwitch(){
+		onGameModeSwitch();
+	}
+
 	private void onGameModeSwitch(){
 		lastMotion = System.currentTimeMillis();
 		panel.setPainter(lastPainter);
