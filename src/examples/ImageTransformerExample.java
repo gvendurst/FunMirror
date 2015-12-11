@@ -12,6 +12,7 @@ import com.github.sarxos.webcam.util.jh.JHGrayFilter;
 
 import com.jhlabs.image.*;
 import com.sun.scenario.effect.Glow;
+import filters.TwirlMotionFilter;
 
 
 public class ImageTransformerExample implements WebcamImageTransformer {

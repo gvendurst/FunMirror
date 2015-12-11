@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import utils.Facing;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by Gvendurst on 4.12.2015.
