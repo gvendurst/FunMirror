@@ -2,6 +2,7 @@ package project;
 
 import com.github.sarxos.webcam.*;
 import filters.*;
+import javafx.scene.paint.Color;
 
 import javax.swing.*;
 
@@ -27,6 +28,7 @@ public class FunMirror implements GameModeSwitch {
 	private Webcam webcam;
 	private FacePainter facePainter1;
 	private GifFacePainter facePainter2;
+	private JTextArea text = new JTextArea("");
 
 	public FunMirror() {
 
@@ -42,6 +44,9 @@ public class FunMirror implements GameModeSwitch {
 		cf = new filters.CrystalFilter();
 		ef = new filters.EmbossFilter();
 
+		// Gamemode texta stillingar
+		text.setOpaque(false);
+		text.setEnabled(false);
 
 		//bgf = new BackgroundFilter();
 		//bgf.setMaxArea(1);
@@ -66,7 +71,7 @@ public class FunMirror implements GameModeSwitch {
 		WebcamPanel panel = new WebcamPanel(webcam);
 		panel.setFPSDisplayed(true);
 		panel.setFillArea(true);
-
+		panel.add(text);
 
 		detector = new WebcamMotionDetector(webcam);
 		detector.setInterval(100); // one check per x ms
@@ -155,22 +160,28 @@ public class FunMirror implements GameModeSwitch {
 		switch (currentGameMode){
 			case 0:
 				webcam.setImageTransformer(wf); // WaveFilter
+				text.setText("Fun Gamemode Title1");
 				break;
 			case 1:
 				facePainter1.start();
+				text.setText("Fun Gamemode Title2");
 				break;
 			case 2:
 				webcam.setImageTransformer(pf); // PinchFilter
+				text.setText("Fun Gamemode Title3");
 				break;
 			case 3:
 				facePainter2.start();
+				text.setText("Fun Gamemode Title4");
 				break;
 			case 4:
 				gms.setMinArea(30);
-				webcam.setImageTransformer(wef); // WaterEffectFilter, líkist smá pinch filter eftir allar breytingarnar
-				break;							 // en við getum experimentað meira. 
+				webcam.setImageTransformer(wef);     // WaterEffectFilter, líkist smá pinch filter eftir allar breytingarnar
+				text.setText("Fun Gamemode Title5"); // en við getum experimentað meira.
+				break;
 			case 5:
 				webcam.setImageTransformer(ff); // FrameFilter
+				text.setText("Fun Gamemode Title6");
 				break;
 		}
 
