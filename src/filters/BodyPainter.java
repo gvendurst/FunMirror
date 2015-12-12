@@ -84,26 +84,15 @@ public class BodyPainter implements Runnable, WebcamPanel.Painter {
 			int h = (int) bounds.height + dy;
 
 
-			/*
-			g2.drawImage(this.image,
-					FunMirror.getScreenSizeX() - (int)(x + (w*1.15)),
-					(int)(y - (h*(0.4 - 0.25))),
-					(int)(w * 1.3),
-					(int)(h * 1.6),
-					null);
-			*/
-
-
-
-			drawImage(g2,x,y,w,h,3.5,7,0,-0.25);
-			//drawImage(g2,x,y,w,h,1,1,0,0.25);
+			drawImage(this.image, g2,x,y,w,h,3.5,7,0,-0.25);
 		}
 
 	}
 
-	private void drawImage(Graphics2D g2, int x, int y, int w, int h, double xScale, double yScale, double xOffset, double yOffset){
-		g2.drawImage(this.image,
-				FunMirror.getScreenSizeX() - (int)(x + (w*xScale - ((xScale - 1) *w*0.5)) - xOffset*w*xScale),
+	private void drawImage(BufferedImage image, Graphics2D g2, int x, int y, int w, int h, double xScale, double yScale, double xOffset, double yOffset){
+		g2.drawImage(image,
+				FunMirror.getScreenSizeX()
+						- (int)(x + (w*xScale - ((xScale - 1) *w*0.5)) - xOffset*w*xScale),
 				(int)(y + yOffset*(h*0.5)*yScale),
 				(int)(w * xScale),
 				(int)(h * yScale),

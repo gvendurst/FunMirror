@@ -100,14 +100,7 @@ public class GifFacePainter implements Runnable, WebcamPanel.Painter {
 			int h = (int) bounds.height + dy;
 
 			if(isGif) {
-				Image img = trollIcon.getImage();
-				BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-				Graphics g = bi.createGraphics();
-				g.drawImage(img, 0, 0, (int)(w * 1.3), (int)(h * 1.6), null);
-				ImageIcon temp = new ImageIcon(bi);
-
-
-				temp.paintIcon(this.panel, g2, FunMirror.getScreenSizeX() - (int)(x + (w*1.15)), (int)(y - (h*(0.4 - 0.0))));
+				drawIcon(trollIcon,g2,x,y,w,h,1.3,1.6,0,-0.5);
 			}
 			else{
 				g2.drawImage(troll, FunMirror.getScreenSizeX() - (int)(x + (w*1.15)), (int)(y - (h*(0.4 - 0.25))), (int)(w * 1.3), (int)(h * 1.6), null);
@@ -116,6 +109,22 @@ public class GifFacePainter implements Runnable, WebcamPanel.Painter {
 
 		}
 
+	}
+
+	private void drawIcon(ImageIcon icon, Graphics2D g2, int x, int y, int w, int h, double xScale, double yScale, double xOffset, double yOffset){
+		Image img = icon.getImage();
+		BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+		Graphics g = bi.createGraphics();
+		g.drawImage(img, 0, 0,
+				(int)(w * xScale),
+				(int)(h * yScale), null);
+		ImageIcon temp = new ImageIcon(bi);
+
+
+		temp.paintIcon(this.panel, g2,
+				FunMirror.getScreenSizeX()
+						- (int)(x + (w*xScale - ((xScale - 1) *w*0.5)) - xOffset*w*xScale),
+				(int)(y + yOffset*(h*0.5)*yScale));
 	}
 
 	@Override
