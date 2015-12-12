@@ -25,6 +25,7 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 	private ArrayList<PicturePoint> points = new ArrayList<PicturePoint>();
 	private double pointRadius;
 	private int minPoints;
+	private int minHands = 1;
 	private WebcamPanel.Painter lastPainter;
 	private BufferedImage handImageLeft;
 	private BufferedImage handImageRight;
@@ -76,6 +77,19 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 
 	public double getMinTime() {
 		return minTime;
+	}
+
+	public int getMinHands() {
+		return minHands;
+	}
+
+	public void setMinHands(int minHands) {
+		if(minHands > 0) {
+			this.minHands = minHands;
+		}
+		else{
+			throw new IllegalArgumentException("minHands must be greater than 0");
+		}
 	}
 
 	public void setMinTime(double minTime) {
@@ -139,7 +153,6 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 		}
 
 		if(!pointsMovedThisTime.isEmpty()){
-			//TODO: Test
 
 			int distortion = 0;
 			int image = 0;
@@ -148,10 +161,10 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 				image += pp.getId() & 1;
 			}
 
-			if(distortion > image){
+			if(distortion > image && distortion >= minHands){
 				onGameModeSwitch(1);
 			}
-			else{
+			else if(image >= distortion && image >= minHands){
 				onGameModeSwitch(0);
 			}
 		}

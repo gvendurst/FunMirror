@@ -28,10 +28,11 @@ public class FunMirror implements GameModeSwitch {
 	private int currentDistortionGameMode = 0;
 	private int currentImageGameMode = 0;
 	private final int numberOfDistortionGameModes = 4;
-	private final int numberOfImageGameModes = 2;
+	private final int numberOfImageGameModes = 3;
 	private Webcam webcam;
 	private FacePainter facePainter1;
 	private GifFacePainter facePainter2;
+	private BodyPainter bodyPainter;
 	private JTextArea text = new JTextArea("");
 	private int lastArgs = 0;
 
@@ -90,13 +91,9 @@ public class FunMirror implements GameModeSwitch {
 		tmf = new TwirlMotionFilter(webcam, panel, detector);
 
 		facePainter1 = new FacePainter(webcam, panel);
-		//facePainter1.setScaleX(1.3);
-		//facePainter1.setScaleY(1.4);
-
 		facePainter2 = new GifFacePainter(webcam, panel);
-		//facePainter2.setScaleX(1.4);
-		//facePainter2.setScaleY(1.6);
-		//facePainter2.setOffsetY(-50);
+		bodyPainter = new BodyPainter(webcam, panel);
+
 
 		//Sets the first gamemode
 		currentDistortionGameMode = numberOfDistortionGameModes - 1;
@@ -144,6 +141,7 @@ public class FunMirror implements GameModeSwitch {
 		gms.setPointRadius(40);
 		gms.setHandScale(0.2);
 		gms.setMinPoints(2);
+		gms.setMinHands(1);
 		detector.addMotionListener(gms);
 		gms.addGameModeSwitch(this);
 		gms.initialGameModeSwitch();
@@ -187,6 +185,8 @@ public class FunMirror implements GameModeSwitch {
 				case 1:
 					facePainter2.stop();
 					break;
+				case 2:
+					bodyPainter.stop();
 				default:
 					webcam.setImageTransformer(null);
 					if (gms != null) {
@@ -205,20 +205,20 @@ public class FunMirror implements GameModeSwitch {
 		switch (currentDistortionGameMode){
 			case 0:
 				webcam.setImageTransformer(wf); // WaveFilter DONE
-				text.setText("Fun Gamemode Title1");
+				text.setText("Distortion gamemode 1");
 				break;
 			case 1:
 				webcam.setImageTransformer(pf); // PinchFilter
-				text.setText("Fun Gamemode Title3");
+				text.setText("Distortion gamemode 2");
 				break;
 			case 2:
 				gms.setMinArea(30);
 				webcam.setImageTransformer(wef);     // WaterEffectFilter, líkist smá pinch filter eftir allar breytingarnar
-				text.setText("Fun Gamemode Title5"); // en við getum experimentað meira.
+				text.setText("Distortion gamemode 3"); // en við getum experimentað meira.
 				break;
 			case 3:
 				tmf.start(); // TwirlMotionFilter
-				text.setText("Fun Gamemode Title6");
+				text.setText("Distortion gamemode 4");
 				break;
 		}
 	}
@@ -229,12 +229,15 @@ public class FunMirror implements GameModeSwitch {
 		switch (currentImageGameMode){
 			case 0:
 				facePainter1.start();
-				text.setText("Fun Gamemode Title2");
+				text.setText("Image gamemode 1");
 				break;
 			case 1:
 				facePainter2.start();
-				text.setText("Fun Gamemode Title4");
+				text.setText("Image gamemode 2");
 				break;
+			case 2:
+				bodyPainter.start();
+				text.setText("Image gamemode 3");
 		}
 	}
 }
