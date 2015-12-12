@@ -108,12 +108,22 @@ public class FacePainter implements Runnable, WebcamPanel.Painter {
 				temp.paintIcon(this.panel, g2, FunMirror.getScreenSizeX() - (int)(x + (w*1.15)), (int)(y - (h*(0.4 - 0.25))));
 			}
 			else{
-				g2.drawImage(troll, FunMirror.getScreenSizeX() - (int)(x + (w*1.15)), (int)(y - (h*(0.4 - 0.25))), (int)(w * 1.3), (int)(h * 1.6), null);
+				drawImage(this.troll, g2,x,y,w,h,1.3,1.6,0,-0.1875);
 			}
 
 
 		}
 
+	}
+
+	private void drawImage(BufferedImage image, Graphics2D g2, int x, int y, int w, int h, double xScale, double yScale, double xOffset, double yOffset){
+		g2.drawImage(image,
+				FunMirror.getScreenSizeX()
+						- (int)(x + (w*xScale - ((xScale - 1) *w*0.5)) - xOffset*w*xScale),
+				(int)(y + yOffset*(h*0.5)*yScale),
+				(int)(w * xScale),
+				(int)(h * yScale),
+				null);
 	}
 
 	@Override
