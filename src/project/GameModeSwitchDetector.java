@@ -109,7 +109,7 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 	@Override
 	public void motionDetected(WebcamMotionEvent webcamMotionEvent) {
 		pointsMovedThisTime.clear();
-		System.out.println("Area: " + webcamMotionEvent.getArea());
+		//System.out.println("Area: " + webcamMotionEvent.getArea());
 
 		if((System.currentTimeMillis() - lastMotion) >= minTime){
 			/*
@@ -134,12 +134,26 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 					}
 				}
 
-				System.out.println("Number of points moved: " + numberOfPoints);
+				//System.out.println("Number of points moved: " + numberOfPoints);
 			}
 		}
 
 		if(!pointsMovedThisTime.isEmpty()){
-			onGameModeSwitch(0);
+			//TODO: Test
+
+			int distortion = 0;
+			int image = 0;
+			for(PicturePoint pp : pointsMovedThisTime){
+				distortion += ~pp.getId() & 1;
+				image += pp.getId() & 1;
+			}
+
+			if(distortion > image){
+				onGameModeSwitch(1);
+			}
+			else{
+				onGameModeSwitch(0);
+			}
 		}
 	}
 
@@ -149,10 +163,11 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 	}
 
 	private void onGameModeSwitch(int args){
+		System.out.println("Switching gamemodes with args: " + args);
 		lastMotion = System.currentTimeMillis();
 		panel.setPainter(lastPainter);
 		for(GameModeSwitch g : listeners){
-			g.onGameModeSwitch(0);
+			g.onGameModeSwitch(args);
 		}
 		lastPainter = panel.getPainter();
 		panel.setPainter(this);

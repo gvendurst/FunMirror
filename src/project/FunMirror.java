@@ -27,12 +27,13 @@ public class FunMirror implements GameModeSwitch {
 	private GameModeSwitchDetector gms;
 	private int currentDistortionGameMode = 0;
 	private int currentImageGameMode = 0;
-	private final int numberOfDistortionGameModes = 6;
+	private final int numberOfDistortionGameModes = 4;
 	private final int numberOfImageGameModes = 2;
 	private Webcam webcam;
 	private FacePainter facePainter1;
 	private GifFacePainter facePainter2;
 	private JTextArea text = new JTextArea("");
+	private int lastArgs = 0;
 
 	public FunMirror() {
 
@@ -150,58 +151,90 @@ public class FunMirror implements GameModeSwitch {
 
 	@Override
 	public void onGameModeSwitch(int args) {
-		//Dispose the current game mode
-		switch (currentDistortionGameMode){
-			case 1:
-				facePainter1.stop();
-				break;
-			case 3:
-				facePainter2.stop();
-				break;
-			case 5:
-				tmf.stop();
-				break;
-			default:
-				webcam.setImageTransformer(null);
-				if(gms != null) {
-					gms.setMinAreaDefault();
-				}
-				break;
+		System.out.println("Game mode changed. args: " + args);
+		stopCurrentGameMode();
+		if(args % 2 == 0) {
+			startNextDistortionGameMode();
 		}
+		else{
+			startNextImageGameMode();
+		}
+		lastArgs = args;
+	}
 
+	private void stopCurrentGameMode(){
+		//Dispose the current game mode
+		if(lastArgs % 2 == 0) {
+			//Current mode is a distortion mode
+			switch (currentDistortionGameMode) {
+				case 3:
+					tmf.stop();
+					break;
+				default:
+					webcam.setImageTransformer(null);
+					if (gms != null) {
+						gms.setMinAreaDefault();
+					}
+					break;
+			}
+		}
+		else{
+			//Current mode is an image mode
+			switch(currentImageGameMode){
+				case 0:
+					facePainter1.stop();
+					break;
+				case 1:
+					facePainter2.stop();
+					break;
+				default:
+					webcam.setImageTransformer(null);
+					if (gms != null) {
+						gms.setMinAreaDefault();
+					}
+					break;
+			}
+		}
+	}
 
-		System.out.println("Game mode changed");
+	private void startNextDistortionGameMode(){
+		System.out.println("Starting distortion gamemode");
 		currentDistortionGameMode = (currentDistortionGameMode + 1) % numberOfDistortionGameModes;
 
-		//Setup the next game mode
+		//Setup the next distortion game mode
 		switch (currentDistortionGameMode){
 			case 0:
 				webcam.setImageTransformer(wf); // WaveFilter DONE
 				text.setText("Fun Gamemode Title1");
 				break;
 			case 1:
-				facePainter1.start();
-				text.setText("Fun Gamemode Title2");
-				break;
-			case 2:
 				webcam.setImageTransformer(pf); // PinchFilter
 				text.setText("Fun Gamemode Title3");
 				break;
-			case 3:
-				facePainter2.start();
-				text.setText("Fun Gamemode Title4");
-				break;
-			case 4:
+			case 2:
 				gms.setMinArea(30);
 				webcam.setImageTransformer(wef);     // WaterEffectFilter, líkist smá pinch filter eftir allar breytingarnar
 				text.setText("Fun Gamemode Title5"); // en við getum experimentað meira.
 				break;
-			case 5:
+			case 3:
 				tmf.start(); // TwirlMotionFilter
 				text.setText("Fun Gamemode Title6");
 				break;
 		}
+	}
 
-		System.out.println("Current gamemode: " + currentDistortionGameMode);
+	private void startNextImageGameMode(){
+		System.out.println("Starting image gamemode");
+		currentImageGameMode = (currentImageGameMode + 1) % numberOfImageGameModes;
+		switch (currentImageGameMode){
+			case 0:
+				facePainter1.start();
+				text.setText("Fun Gamemode Title2");
+				break;
+			case 1:
+				facePainter2.start();
+				text.setText("Fun Gamemode Title4");
+				break;
+		}
 	}
 }
