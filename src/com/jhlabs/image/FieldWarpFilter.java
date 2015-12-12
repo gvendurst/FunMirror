@@ -47,17 +47,13 @@ public class FieldWarpFilter extends TransformFilter {
 	private float amount = 1.0f;
 	private float power = 1.0f;
 	private float strength = 2.0f;
-	private Line[] inLines = new Line[2];
-	private Line[] outLines = new Line[2];
+	private Line[] inLines;
+	private Line[] outLines;
 	private Line[] intermediateLines;
 	private float width, height;
 
 	public FieldWarpFilter() {
-		//640x 480y
-		inLines[0] = new Line(200, 100, 200,480);
-		outLines[0] = new Line(300, 100, 300, 480);
-		inLines[1] = new Line(400, 100, 400,480);
-		outLines[1] = new Line(300, 100, 300, 480);
+
 	}
 
 	/**
