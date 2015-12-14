@@ -243,9 +243,7 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 					(int)(img.getHeight()*handScale),
 					null);
 
-			g2.drawOval(FunMirror.getScreenSizeX() - (p.x + (int)pointRadius), p.y - (int)pointRadius, (int)(2*pointRadius), (int)(2*pointRadius));
-
-
+			//g2.drawOval(FunMirror.getScreenSizeX() - (p.x + (int)pointRadius), p.y - (int)pointRadius, (int)(2*pointRadius), (int)(2*pointRadius));
 		}
 	}
 }
