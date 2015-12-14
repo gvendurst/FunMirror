@@ -62,7 +62,10 @@ public class PinchMotionFilter extends JFrame implements WebcamPanel.Painter {
 
         if (detector.isMotion()) {
             float x = ((((float)cog.getX() - 0) * (1 - 0)) / (640 - 0)) + 0;
-            pinch = new PinchFilter2(2*x);
+            pinch = new PinchFilter2(3*x);
+        }
+        else {
+
         }
 
         g.dispose();

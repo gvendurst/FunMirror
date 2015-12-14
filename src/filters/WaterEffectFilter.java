@@ -15,10 +15,17 @@ public class WaterEffectFilter implements WebcamImageTransformer, WebcamListener
 
     // Gerði annan contructor fyrir WaterFilter til að experimenta.
     // WaterFilter(float setAmplitude, float setPhase, float setRadius, float setWavelength)
-    private static final WaterFilter WATER_FILTER = new WaterFilter(0.1f, 50.0f, 700.0f, 200.0f);
+    private static final WaterFilter WATER_FILTER = new WaterFilter();
 
     public WaterEffectFilter() {
 
+    }
+
+    public WaterEffectFilter(float amplitude, float phase, float radius, float wavelength) {
+        WATER_FILTER.setAmplitude(amplitude);
+        WATER_FILTER.setPhase(phase);
+        WATER_FILTER.setRadius(radius);
+        WATER_FILTER.setWavelength(wavelength);
     }
 
     @Override

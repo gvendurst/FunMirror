@@ -42,15 +42,15 @@ public class FunMirror implements GameModeSwitch {
 	}
 
 	public void start(){
+		// Ekki notaðir filterar
+		/*
 		gray = new filters.GrayFilter();
-		wf = new filters.WaveFilter();
-		pf = new PinchFilter2();
-		mpf = new MultiPinchFilter();
-		wef = new WaterEffectFilter();
 		ff = new filters.FrameFilter();
 		cf = new filters.CrystalFilter();
 		ef = new filters.EmbossFilter();
-
+		pf = new PinchFilter2();
+		mpf = new MultiPinchFilter();
+		*/
 
 		// Gamemode texta stillingar
 		text.setOpaque(false);
@@ -91,6 +91,10 @@ public class FunMirror implements GameModeSwitch {
 
 		tmf = new TwirlMotionFilter(webcam, panel, detector);
 		pmf = new PinchMotionFilter(webcam, panel, detector);
+		// (float xAmplitude, float yAmplitude, float xyWaveLength)
+		wf = new filters.WaveFilter(5.0f, 10.0f, 20.0f);
+		// (float amplitude, float phase, float radius, float wavelength)
+		wef = new filters.WaterEffectFilter(0.1f, 50.0f, 700.0f, 200.0f);
 
 		facePainter1 = new FacePainter(webcam, panel);
 		facePainter2 = new GifFacePainter(webcam, panel);
@@ -131,8 +135,8 @@ public class FunMirror implements GameModeSwitch {
 	}
 
 	public static void main(String[] args) {
-		funMirror = new FunMirror();
-		funMirror.start();
+			funMirror = new FunMirror();
+			funMirror.start();
 	}
 
 	private void setupGameModeSwitch(WebcamPanel panel){
