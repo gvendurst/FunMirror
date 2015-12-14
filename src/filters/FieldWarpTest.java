@@ -19,19 +19,18 @@ public class FieldWarpTest extends FieldWarpFilter implements WebcamImageTransfo
     private Line[] outLines = new Line[2];
 
     public FieldWarpTest() {
-        inLines[0] = new Line(200, 100, 200,480);
-        outLines[0] = new Line(300, 100, 300, 480);
-        inLines[1] = new Line(400, 100, 400,480);
-        outLines[1] = new Line(300, 100, 300, 480);
+        inLines[0] = new Line(100, 0, 100,480);
+        outLines[0] = new Line(200, 0, 200,480);
+        inLines[1] = new Line(500, 0, 500,480);
+        outLines[1] = new Line(400, 0, 400, 480);
 
         FIELD_WARP_FILTER.setAmount(0.4f);
         FIELD_WARP_FILTER.setPower(0.5f);
-        FIELD_WARP_FILTER.setStrength(0.5f);
+        FIELD_WARP_FILTER.setStrength(0.1f);
 
         FIELD_WARP_FILTER.setInLines(inLines);
         FIELD_WARP_FILTER.setOutLines(outLines);
     }
-
 
     @Override
     public void webcamOpen(WebcamEvent webcamEvent) {

@@ -16,6 +16,14 @@ public class PinchFilter2 implements WebcamImageTransformer, WebcamListener {
 	public PinchFilter2() {
 		PINCH_FILTER.setAmount(-0.5f);
 		PINCH_FILTER.setRadius(300);
+		PINCH_FILTER.setInterpolation(5);
+	}
+
+	public PinchFilter2(float angle) {
+		PINCH_FILTER.setAmount(-0.5f);
+		PINCH_FILTER.setRadius(300);
+		PINCH_FILTER.setInterpolation(5);
+		PINCH_FILTER.setAngle(angle);
 	}
 
 	@Override

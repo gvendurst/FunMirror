@@ -67,7 +67,14 @@ public class FieldWarpFilter extends JFrame implements WebcamPanel.Painter {
         g.setColor(Color.WHITE);
         g.drawString(String.format("Area: %.2f%%", s), 10, 20);
 
-        g.drawLine(100,100,500,100);
+        // InLines
+        g.drawLine(100, 0, 100,480); //in 0
+        g.drawLine(200, 0, 200,480); //out 0
+
+        // OutLines
+        g.drawLine(500, 0, 500,480); // in 1
+        g.drawLine(400, 0, 400, 480); // out 1
+
 
         g.dispose();
 

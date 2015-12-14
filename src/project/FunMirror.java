@@ -23,6 +23,7 @@ public class FunMirror implements GameModeSwitch {
 	private PinchFilter2 pf;
 	private MultiPinchFilter mpf;
 	private TwirlMotionFilter tmf;
+	private PinchMotionFilter pmf;
 
 	private GameModeSwitchDetector gms;
 	private int currentDistortionGameMode = 0;
@@ -89,6 +90,7 @@ public class FunMirror implements GameModeSwitch {
 		panel.setMirrored(true);
 
 		tmf = new TwirlMotionFilter(webcam, panel, detector);
+		pmf = new PinchMotionFilter(webcam, panel, detector);
 
 		facePainter1 = new FacePainter(webcam, panel);
 		facePainter2 = new GifFacePainter(webcam, panel);
@@ -168,6 +170,9 @@ public class FunMirror implements GameModeSwitch {
 		if(lastArgs % 2 == 0) {
 			//Current mode is a distortion mode
 			switch (currentDistortionGameMode) {
+				case 1:
+					pmf.stop();
+					break;
 				case 3:
 					tmf.stop();
 					break;
@@ -211,7 +216,8 @@ public class FunMirror implements GameModeSwitch {
 				text.setText("Distortion gamemode 1");
 				break;
 			case 1:
-				webcam.setImageTransformer(pf); // PinchFilter
+				pmf.start();	//Movement changing PinchFilter2, modified.
+				//webcam.setImageTransformer(pf); // PinchFilter
 				text.setText("Distortion gamemode 2");
 				break;
 			case 2:
