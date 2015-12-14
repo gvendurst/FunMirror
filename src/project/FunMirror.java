@@ -221,6 +221,8 @@ public class FunMirror implements GameModeSwitch {
 				text.setText("Distortion gamemode 4");
 				break;
 		}
+
+		text.setText("Man, you funky!");
 	}
 
 	private void startNextImageGameMode(){
@@ -239,5 +241,6 @@ public class FunMirror implements GameModeSwitch {
 				bodyPainter.start();
 				text.setText("Image gamemode 3");
 		}
+		text.setText("Definitely not you");
 	}
 }

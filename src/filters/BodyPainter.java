@@ -27,7 +27,7 @@ public class BodyPainter implements Runnable, WebcamPanel.Painter {
 	private BufferedImage image = null;
 	private Webcam webcam;
 	private WebcamPanel panel;
-	private final String fileName = "/creepyclown-02.png";
+	private final String fileName = "/clown2.png";
 
 
 	public BodyPainter(Webcam webcam, WebcamPanel panel){
@@ -84,7 +84,7 @@ public class BodyPainter implements Runnable, WebcamPanel.Painter {
 			int h = (int) bounds.height + dy;
 
 
-			drawImage(this.image, g2,x,y,w,h,3.5,7,0,-0.25);
+			drawImage(this.image, g2,x,y,w,h,3.25,6.5,0,0);
 		}
 
 	}
