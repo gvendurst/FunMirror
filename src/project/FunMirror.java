@@ -60,7 +60,7 @@ public class FunMirror implements GameModeSwitch {
 		//bgf.setMinTime(5000);
 		webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
-
+		//System.out.println(webcam.getViewSize());
 
 		webcam.open();
 
@@ -136,12 +136,15 @@ public class FunMirror implements GameModeSwitch {
 	private void setupGameModeSwitch(WebcamPanel panel){
 		gms = new GameModeSwitchDetector(panel);
 		gms.setMinTime(3000);
-		gms.addPoint(100,100, Facing.LEFT, 0);
-		gms.addPoint(getScreenSizeX() - 100,100, Facing.RIGHT, 1);
+		gms.addPoint(100,getScreenSizeY() - 100, Facing.LEFT, 0);
+		gms.addPoint(100,100, Facing.LEFT, 1);
+		gms.addPoint(getScreenSizeX() - 100,100, Facing.RIGHT, 2);
+		gms.addPoint(getScreenSizeX() - 100, getScreenSizeY() - 100, Facing.RIGHT, 3);
+		gms.setMinHands(2);
+
 		gms.setPointRadius(40);
 		gms.setHandScale(0.2);
 		gms.setMinPoints(2);
-		gms.setMinHands(1);
 		detector.addMotionListener(gms);
 		gms.addGameModeSwitch(this);
 		gms.initialGameModeSwitch();
@@ -221,6 +224,8 @@ public class FunMirror implements GameModeSwitch {
 				text.setText("Distortion gamemode 4");
 				break;
 		}
+
+		text.setText("Man, you funky!");
 	}
 
 	private void startNextImageGameMode(){
@@ -239,5 +244,6 @@ public class FunMirror implements GameModeSwitch {
 				bodyPainter.start();
 				text.setText("Image gamemode 3");
 		}
+		text.setText("Definitely not you");
 	}
 }

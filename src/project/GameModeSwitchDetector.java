@@ -7,10 +7,8 @@ import utils.Facing;
 import utils.ImageLoader;
 import utils.PicturePoint;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -27,10 +25,19 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 	private int minPoints;
 	private int minHands = 1;
 	private WebcamPanel.Painter lastPainter;
+
 	private BufferedImage handImageLeft;
 	private BufferedImage handImageRight;
-	private String fileNameLeft = "/blarhanskileft.png";
-	private String fileNameRight = "/blarhanskiright.png";
+	private BufferedImage handDistortionLeft;
+	private BufferedImage handDistortionRight;
+
+
+
+	private String fileNameDistortionLeft = "/blarhanskileft.png";
+	private String fileNameDistortionRight = "/blarhanskiright.png";
+	private String fileNameImageLeft = "/blarhanskileft.png";
+	private String fileNameImageRight = "/blarhanskiright.png";
+
 	private WebcamPanel panel;
 	private WebcamPanel.Painter painter;
 	private double handScale = 0.25;
@@ -43,8 +50,11 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 		minArea = MIN_AREA_DEFAULT;
 		this.panel = panel;
 
-		handImageLeft = ImageLoader.loadImage(fileNameLeft);
-		handImageRight = ImageLoader.loadImage(fileNameRight);
+		handImageLeft = ImageLoader.loadImage(fileNameImageLeft);
+		handImageRight = ImageLoader.loadImage(fileNameImageRight);
+		handDistortionLeft = ImageLoader.loadImage(fileNameDistortionLeft);
+		handDistortionRight = ImageLoader.loadImage(fileNameDistortionRight);
+
 
 		painter = panel.getPainter();
 		lastPainter = painter;
@@ -213,7 +223,19 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 		Iterator<PicturePoint> dfi = points.iterator();
 		while (dfi.hasNext()) {
 			PicturePoint p = dfi.next();
-			BufferedImage img = (p.getFacing() == Facing.LEFT) ? handImageLeft : handImageRight;
+			BufferedImage img;
+			if(p.getFacing() == Facing.LEFT && p.getId() % 2 == 0){
+				img = handDistortionLeft;
+			}
+			else if(p.getFacing() == Facing.LEFT && p.getId() % 2 == 1){
+				img = handImageLeft;
+			}
+			else if(p.getFacing() == Facing.RIGHT && p.getId() % 2 == 0){
+				img = handDistortionRight;
+			}
+			else{
+				img = handImageRight;
+			}
 
 			g2.drawImage(img, (int)(FunMirror.getScreenSizeX() - (p.x + 0.5* img.getWidth()*handScale)),
 					(int)(p.y - 0.5* img.getHeight()*handScale),
@@ -221,9 +243,7 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 					(int)(img.getHeight()*handScale),
 					null);
 
-			g2.drawOval(FunMirror.getScreenSizeX() - (p.x + (int)pointRadius), p.y - (int)pointRadius, (int)(2*pointRadius), (int)(2*pointRadius));
-
-
+			//g2.drawOval(FunMirror.getScreenSizeX() - (p.x + (int)pointRadius), p.y - (int)pointRadius, (int)(2*pointRadius), (int)(2*pointRadius));
 		}
 	}
 }
