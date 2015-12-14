@@ -28,12 +28,14 @@ public class PinchMotionFilter extends JFrame implements WebcamPanel.Painter {
     private final WebcamPanel panel;
     private final WebcamMotionDetector detector;
     private PinchFilter2 pinch;
+    public int angleMultiplier;
 
 
-    public PinchMotionFilter(Webcam webcam, WebcamPanel panel, WebcamMotionDetector detector){
+    public PinchMotionFilter(Webcam webcam, WebcamPanel panel, WebcamMotionDetector detector, int angle){
         this.webcam = webcam;
         this.panel = panel;
         this.detector = detector;
+        this.angleMultiplier = angle;
 
         pinch = new PinchFilter2();
     }
@@ -62,7 +64,7 @@ public class PinchMotionFilter extends JFrame implements WebcamPanel.Painter {
 
         if (detector.isMotion()) {
             float x = ((((float)cog.getX() - 0) * (1 - 0)) / (640 - 0)) + 0;
-            pinch = new PinchFilter2(3*x);
+            pinch = new PinchFilter2(angleMultiplier*x);
         }
         else {
 
