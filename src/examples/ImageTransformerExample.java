@@ -40,8 +40,8 @@ public class ImageTransformerExample implements WebcamImageTransformer {
 		webcam.setImageTransformer(this);
 		webcam.open();
 
-		PINCH_FILTER.setAmount(-0.1f);
-		PINCH_FILTER.setRadius(500);
+		PINCH_FILTER.setAmount(1.0f);
+		PINCH_FILTER.setRadius(300);
 		PINCH_FILTER.setAngle(1);
 
 		JFrame window = new JFrame("Test Transformer");
