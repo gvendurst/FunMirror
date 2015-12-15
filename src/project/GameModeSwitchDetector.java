@@ -33,10 +33,10 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 
 
 
-	private String fileNameDistortionLeft = "/blarhanskileft.png";
-	private String fileNameDistortionRight = "/blarhanskiright.png";
-	private String fileNameImageLeft = "/blarhanskileft.png";
-	private String fileNameImageRight = "/blarhanskiright.png";
+	private String fileNameDistortionLeft = "/haegrilodin.png";
+	private String fileNameDistortionRight = "/vinstrilodin.png";
+	private String fileNameImageLeft = "/vinstribla.png";
+	private String fileNameImageRight = "/haegribla.png";
 
 	private WebcamPanel panel;
 	private WebcamPanel.Painter painter;
@@ -243,7 +243,7 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 					(int)(img.getHeight()*handScale),
 					null);
 
-			//g2.drawOval(FunMirror.getScreenSizeX() - (p.x + (int)pointRadius), p.y - (int)pointRadius, (int)(2*pointRadius), (int)(2*pointRadius));
+			g2.drawOval(FunMirror.getScreenSizeX() - (p.x + (int)pointRadius), p.y - (int)pointRadius, (int)(2*pointRadius), (int)(2*pointRadius));
 		}
 	}
 }
