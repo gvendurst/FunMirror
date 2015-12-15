@@ -74,7 +74,7 @@ public class FunMirror implements GameModeSwitch {
 		//webcam.addWebcamListener(wf);
 
 
-		JFrame window = new JFrame("Test Transformer");
+		JFrame window = new JFrame("Interactive fun mirror");
 
 		WebcamPanel panel = new WebcamPanel(webcam);
 		panel.setFPSDisplayed(true);
@@ -153,7 +153,7 @@ public class FunMirror implements GameModeSwitch {
 		gms.setMinHands(2);
 
 		gms.setPointRadius(40);
-		gms.setHandScale(0.2);
+		gms.setHandScale(0.15);
 		gms.setMinPoints(2);
 		detector.addMotionListener(gms);
 		gms.addGameModeSwitch(this);
