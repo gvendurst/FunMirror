@@ -45,6 +45,8 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 
 	private ArrayList<GameModeSwitch> listeners;
 
+	private int easterEggsInARow = 0;
+
 	public GameModeSwitchDetector(WebcamPanel panel){
 		listeners = new ArrayList<>();
 		minArea = MIN_AREA_DEFAULT;
@@ -160,6 +162,18 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 
 				//System.out.println("Number of points moved: " + numberOfPoints);
 			}
+
+			if(pointsMovedThisTime.size() == points.size()) {
+				easterEggsInARow++;
+				System.out.println("Inc");
+				if(easterEggsInARow == 1){
+					System.out.println("So, you have found my little secret!");
+				}
+			}
+			else if(pointsMovedThisTime.size() != 0){
+				System.out.println("Reset. size: " + pointsMovedThisTime.size());
+				easterEggsInARow = 0;
+			}
 		}
 
 		if(!pointsMovedThisTime.isEmpty()){
@@ -243,7 +257,7 @@ public class GameModeSwitchDetector implements WebcamMotionListener,WebcamPanel.
 					(int)(img.getHeight()*handScale),
 					null);
 
-			g2.drawOval(FunMirror.getScreenSizeX() - (p.x + (int)pointRadius), p.y - (int)pointRadius, (int)(2*pointRadius), (int)(2*pointRadius));
+			//g2.drawOval(FunMirror.getScreenSizeX() - (p.x + (int)pointRadius), p.y - (int)pointRadius, (int)(2*pointRadius), (int)(2*pointRadius));
 		}
 	}
 }

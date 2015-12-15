@@ -5,6 +5,9 @@ import filters.*;
 import utils.Facing;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 /**
  * Created by Gvendurst on 4.12.2015.
@@ -29,12 +32,15 @@ public class FunMirror implements GameModeSwitch {
 	private int currentDistortionGameMode = 0;
 	private int currentImageGameMode = 0;
 	private final int numberOfDistortionGameModes = 4;
-	private final int numberOfImageGameModes = 4;
+	private final int numberOfImageGameModes = 5;
 	private Webcam webcam;
+	private WebcamPanel panel;
 	private FacePainter facePainter1;
 	private GifFacePainter facePainter2;
 	private BodyPainter bodyPainter;
 	private AcrobatPainter acrobatPainter;
+	private MonkeyFacePainter monkeyFacePainter;
+
 	private JTextArea text = new JTextArea("");
 	private int lastArgs = 0;
 
@@ -43,6 +49,7 @@ public class FunMirror implements GameModeSwitch {
 	}
 
 	public void start(){
+
 		// Ekki notaðir filterar
 		gray = new filters.GrayFilter();
 		ff = new filters.FrameFilter();
@@ -77,7 +84,7 @@ public class FunMirror implements GameModeSwitch {
 
 		JFrame window = new JFrame("Interactive fun mirror");
 
-		WebcamPanel panel = new WebcamPanel(webcam);
+		panel = new WebcamPanel(webcam);
 		panel.setFPSDisplayed(true);
 		panel.setFillArea(true);
 		panel.add(text);
@@ -105,6 +112,7 @@ public class FunMirror implements GameModeSwitch {
 		facePainter2 = new GifFacePainter(webcam, panel);
 		bodyPainter = new BodyPainter(webcam, panel);
 		acrobatPainter = new AcrobatPainter(webcam,panel);
+		monkeyFacePainter = new MonkeyFacePainter(webcam,panel);
 
 
 		//Sets the first gamemode
@@ -209,6 +217,9 @@ public class FunMirror implements GameModeSwitch {
 				case 3:
 					acrobatPainter.stop();
 					break;
+				case 4:
+					monkeyFacePainter.stop();
+					break;
 				default:
 					webcam.setImageTransformer(null);
 					if (gms != null) {
@@ -244,7 +255,7 @@ public class FunMirror implements GameModeSwitch {
 				break;
 		}
 
-		text.setText("Man, you funky!");
+		text.setText("Man, you're funky!");
 	}
 
 	private void startNextImageGameMode(){
@@ -265,6 +276,9 @@ public class FunMirror implements GameModeSwitch {
 				break;
 			case 3:
 				acrobatPainter.start();
+				break;
+			case 4:
+				monkeyFacePainter.start();
 				break;
 		}
 		text.setText("Definitely not you");
