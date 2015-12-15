@@ -29,11 +29,12 @@ public class FunMirror implements GameModeSwitch {
 	private int currentDistortionGameMode = 0;
 	private int currentImageGameMode = 0;
 	private final int numberOfDistortionGameModes = 4;
-	private final int numberOfImageGameModes = 3;
+	private final int numberOfImageGameModes = 4;
 	private Webcam webcam;
 	private FacePainter facePainter1;
 	private GifFacePainter facePainter2;
 	private BodyPainter bodyPainter;
+	private AcrobatPainter acrobatPainter;
 	private JTextArea text = new JTextArea("");
 	private int lastArgs = 0;
 
@@ -103,6 +104,7 @@ public class FunMirror implements GameModeSwitch {
 		facePainter1 = new FacePainter(webcam, panel);
 		facePainter2 = new GifFacePainter(webcam, panel);
 		bodyPainter = new BodyPainter(webcam, panel);
+		acrobatPainter = new AcrobatPainter(webcam,panel);
 
 
 		//Sets the first gamemode
@@ -203,6 +205,10 @@ public class FunMirror implements GameModeSwitch {
 					break;
 				case 2:
 					bodyPainter.stop();
+					break;
+				case 3:
+					acrobatPainter.stop();
+					break;
 				default:
 					webcam.setImageTransformer(null);
 					if (gms != null) {
@@ -256,6 +262,10 @@ public class FunMirror implements GameModeSwitch {
 			case 2:
 				bodyPainter.start();
 				text.setText("Image gamemode 3");
+				break;
+			case 3:
+				acrobatPainter.start();
+				break;
 		}
 		text.setText("Definitely not you");
 	}
