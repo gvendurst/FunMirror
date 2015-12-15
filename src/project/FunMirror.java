@@ -102,7 +102,7 @@ public class FunMirror implements GameModeSwitch {
 
 		panel.setMirrored(true);
 
-		
+
 		tmf = new TwirlMotionFilter(webcam, panel, detector);
 		// (Webcam webcam, WebcamPanel panel, WebcamMotionDetector detector, int angle)
 		// Angle is the circle-twirl effect, multiplied by the movement detector (0-left to 1-right)
