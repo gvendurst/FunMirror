@@ -32,7 +32,7 @@ public class FunMirror implements GameModeSwitch {
 	private int currentDistortionGameMode = 0;
 	private int currentImageGameMode = 0;
 	private final int numberOfDistortionGameModes = 4;
-	private final int numberOfImageGameModes = 5;
+	private final int numberOfImageGameModes = 6;
 	private Webcam webcam;
 	private WebcamPanel panel;
 	private FacePainter facePainter1;
@@ -40,6 +40,7 @@ public class FunMirror implements GameModeSwitch {
 	private BodyPainter bodyPainter;
 	private AcrobatPainter acrobatPainter;
 	private MonkeyFacePainter monkeyFacePainter;
+	private HairyGuyBodyPainter hairyGuyBodyPainter;
 
 	private JTextArea text = new JTextArea("");
 	private int lastArgs = 0;
@@ -113,6 +114,7 @@ public class FunMirror implements GameModeSwitch {
 		bodyPainter = new BodyPainter(webcam, panel);
 		acrobatPainter = new AcrobatPainter(webcam,panel);
 		monkeyFacePainter = new MonkeyFacePainter(webcam,panel);
+		hairyGuyBodyPainter = new HairyGuyBodyPainter(webcam, panel);
 
 
 		//Sets the first gamemode
@@ -206,18 +208,21 @@ public class FunMirror implements GameModeSwitch {
 			//Current mode is an image mode
 			switch(currentImageGameMode){
 				case 0:
-					facePainter1.stop();
+					hairyGuyBodyPainter.stop();
 					break;
 				case 1:
-					facePainter2.stop();
+					facePainter1.stop();
 					break;
 				case 2:
-					bodyPainter.stop();
+					facePainter2.stop();
 					break;
 				case 3:
-					acrobatPainter.stop();
+					bodyPainter.stop();
 					break;
 				case 4:
+					acrobatPainter.stop();
+					break;
+				case 5:
 					monkeyFacePainter.stop();
 					break;
 				default:
@@ -263,21 +268,24 @@ public class FunMirror implements GameModeSwitch {
 		currentImageGameMode = (currentImageGameMode + 1) % numberOfImageGameModes;
 		switch (currentImageGameMode){
 			case 0:
+				hairyGuyBodyPainter.start();
+				break;
+			case 1:
 				facePainter1.start();
 				text.setText("Image gamemode 1");
 				break;
-			case 1:
+			case 2:
 				facePainter2.start();
 				text.setText("Image gamemode 2");
 				break;
-			case 2:
+			case 3:
 				bodyPainter.start();
 				text.setText("Image gamemode 3");
 				break;
-			case 3:
+			case 4:
 				acrobatPainter.start();
 				break;
-			case 4:
+			case 5:
 				monkeyFacePainter.start();
 				break;
 		}

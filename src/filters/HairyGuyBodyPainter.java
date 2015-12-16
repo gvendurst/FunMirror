@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
 /**
  * Created by Gvendurst on 12.12.2015.
  */
-public class AcrobatPainter implements Runnable, WebcamPanel.Painter {
+public class HairyGuyBodyPainter implements Runnable, WebcamPanel.Painter {
 	private static final Executor EXECUTOR = Executors.newSingleThreadExecutor();
 	private static final HaarCascadeDetector detector = new HaarCascadeDetector();
 	private static final Stroke STROKE = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.0f, new float[] { 1.0f }, 0.0f);
@@ -28,10 +28,10 @@ public class AcrobatPainter implements Runnable, WebcamPanel.Painter {
 	private ImageIcon theImage = null;
 	private Webcam webcam;
 	private WebcamPanel panel;
-	private final String fileName = "/animatedacrobat.gif";
+	private final String fileName = "/hairysomeone.gif";
 
 
-	public AcrobatPainter(Webcam webcam, WebcamPanel panel){
+	public HairyGuyBodyPainter(Webcam webcam, WebcamPanel panel){
 		this.webcam = webcam;
 		this.panel = panel;
 	}
@@ -84,7 +84,7 @@ public class AcrobatPainter implements Runnable, WebcamPanel.Painter {
 			int w = (int) bounds.width + 2 * dx;
 			int h = (int) bounds.height + dy;
 
-			drawIcon(theImage,g2,x,y,w,h,6.5,6.5,0.0,0.3);
+			drawIcon(theImage,g2,x,y,w,h,4,6.5,0,-0.05);
 			//drawImage(this.image, g2,x,y,w,h,3.25,6.5,0,0);
 		}
 
